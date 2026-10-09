@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#faf8f4">
-  <title>Ministerio Juvenil | Desarrollo y Discipulado</title>
-  <meta name="description" content="Plataforma de desarrollo personal, discipulado y acompañamiento del ministerio juvenil.">
+  <meta name="theme-color" content="#f8f6f1">
+  <meta name="description" content="Panel de desarrollo, discipulado y acompañamiento juvenil.">
+  <title>Desarrollo Juvenil | Ministerio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,224 +15,161 @@
 
   <style>
     :root {
-      --bg: #faf8f4;
-      --white: #ffffff;
-      --surface: #f6f1ea;
-      --surface-hover: #eee3d5;
+      --bg: #f8f6f1;
+      --surface: #ffffff;
+      --surface-soft: #f3efe8;
       --brown: #a17f5b;
       --brown-dark: #75583c;
-      --brown-light: #e9d9c6;
-      --text: #302c27;
-      --muted: #898176;
-      --border: #ebe4da;
-      --green: #65806a;
-      --green-bg: #edf3eb;
-      --blue: #71879a;
-      --blue-bg: #edf2f6;
-      --rose: #a7746e;
-      --rose-bg: #f8eeeb;
-      --shadow: 0 12px 40px rgba(76, 57, 37, .055);
+      --brown-light: #e8ddce;
+      --text: #342e27;
+      --muted: #888176;
+      --border: #eae4da;
+      --green: #65816a;
+      --shadow: 0 8px 30px rgba(68, 51, 31, .045);
       --radius: 18px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: "DM Sans", sans-serif;
+      margin: 0;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
-    button, input { font: inherit; }
+    button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
 
-    button:focus-visible, input:focus-visible {
-      outline: 2px solid var(--brown);
-      outline-offset: 3px;
-    }
-
-    .app { display: flex; min-height: 100vh; }
-
-    /* SIDEBAR */
+    .app { min-height: 100vh; }
 
     .sidebar {
-      width: 252px;
-      background: var(--white);
-      border-right: 1px solid var(--border);
-      padding: 29px 18px;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 20;
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
-      z-index: 20;
-      transition: transform .3s ease;
+      width: 250px;
+      padding: 28px 18px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      transition: transform .25s ease;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0 10px;
-      margin-bottom: 42px;
+      padding: 0 8px 32px;
     }
 
     .brand-icon {
+      display: grid;
+      place-items: center;
       width: 43px;
       height: 43px;
       border-radius: 14px;
-      background: var(--brown-dark);
+      background: var(--brown);
       color: white;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      box-shadow: 0 5px 15px #70523725;
+      font-size: 19px;
     }
 
     .brand-name {
       font-family: Manrope, sans-serif;
-      font-size: 14px;
       font-weight: 800;
+      font-size: 15px;
       letter-spacing: -.4px;
     }
 
     .brand-sub {
       color: var(--muted);
-      font-size: 9px;
-      margin-top: 4px;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
+      font-size: 11px;
     }
-
-    .nav-group { margin-bottom: 29px; }
 
     .nav-label {
+      margin: 0 10px 10px;
+      color: #a69c8e;
       font-size: 10px;
-      color: #aaa196;
-      text-transform: uppercase;
-      letter-spacing: 1.6px;
       font-weight: 700;
-      padding: 0 12px;
-      margin-bottom: 12px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
     }
 
-    .nav-link {
-      width: 100%;
+    .nav { display: grid; gap: 5px; }
+
+    .nav button {
       display: flex;
       align-items: center;
       gap: 13px;
+      width: 100%;
       padding: 12px 13px;
-      margin: 4px 0;
-      border: none;
+      border: 0;
       border-radius: 11px;
       background: transparent;
-      color: #827a70;
+      color: #777066;
       text-align: left;
-      font-size: 12px;
-      transition: background .2s, color .2s, transform .2s;
+      transition: background .2s, color .2s;
     }
 
-    .nav-link i {
-      width: 18px;
-      font-size: 14px;
-      text-align: center;
-    }
+    .nav button i { width: 18px; text-align: center; }
 
-    .nav-link:hover {
-      background: #f8f4ef;
+    .nav button:hover,
+    .nav button.active {
+      background: #f1e9de;
       color: var(--brown-dark);
-      transform: translateX(2px);
     }
 
-    .nav-link.active {
-      background: #f1e7db;
-      color: var(--brown-dark);
-      font-weight: 700;
-    }
-
-    .sidebar-bottom { margin-top: auto; }
-
-    .mission-mini {
-      padding: 17px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, #faf6ef, #fff);
-      border-radius: 15px;
-      margin-bottom: 18px;
-    }
-
-    .mission-mini i {
-      color: var(--brown);
-      margin-bottom: 10px;
-      font-size: 17px;
-    }
-
-    .mission-mini p {
-      font-family: Manrope, sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.7;
-    }
-
-    .mission-mini span {
-      display: block;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.6;
-      margin-top: 8px;
-    }
-
-    .user-mini {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      padding: 12px 7px 0;
+    .sidebar-bottom {
+      margin-top: auto;
+      padding: 18px 10px 0;
       border-top: 1px solid var(--border);
     }
 
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--brown-light);
+    .mission-mini {
+      padding: 15px;
+      border-radius: 13px;
+      background: var(--bg);
       color: var(--brown-dark);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: 12px;
-      flex-shrink: 0;
     }
 
-    .user-name { font-size: 11px; font-weight: 700; }
-    .user-role { font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .mission-mini strong { display: block; margin-bottom: 5px; }
+    .mission-mini p { margin: 0; color: var(--muted); font-size: 12px; }
 
-    /* MAIN LAYOUT */
-
-    .main { flex: 1; min-width: 0; }
+    .main {
+      min-height: 100vh;
+      margin-left: 250px;
+    }
 
     .topbar {
-      min-height: 78px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(250,248,244,.92);
       gap: 20px;
+      min-height: 78px;
+      padding: 15px 36px;
+      background: rgba(248, 246, 241, .93);
+      border-bottom: 1px solid rgba(234, 228, 218, .8);
+      backdrop-filter: blur(14px);
     }
 
-    .breadcrumb { color: var(--muted); font-size: 11px; }
-    .breadcrumb strong { color: var(--text); font-weight: 700; }
+    .topbar-left { display: flex; align-items: center; gap: 13px; }
+    .eyebrow { color: var(--muted); font-size: 11px; }
+    .page-heading { margin: 0; font: 800 19px Manrope, sans-serif; }
 
-    .top-actions { display: flex; align-items: center; gap: 11px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
 
     .search {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
+      width: 235px;
       padding: 10px 13px;
-      width: 220px;
       background: white;
       border: 1px solid var(--border);
       border-radius: 11px;
@@ -242,950 +179,750 @@
     .search input {
       width: 100%;
       min-width: 0;
-      border: none;
-      outline: none;
-      color: var(--text);
+      border: 0;
+      outline: 0;
       background: transparent;
-      font-size: 11px;
+      color: var(--text);
     }
 
     .icon-button {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
       border: 1px solid var(--border);
+      border-radius: 12px;
       background: white;
-      width: 39px;
-      height: 39px;
-      border-radius: 11px;
       color: var(--brown-dark);
-      transition: background .2s, transform .2s;
-    }
-
-    .icon-button:hover {
-      background: var(--surface);
-      transform: translateY(-1px);
     }
 
     .menu-toggle { display: none; }
 
     .content {
-      padding: 36px 40px 45px;
-      max-width: 1600px;
-      margin: auto;
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 32px 36px 55px;
     }
 
-    /* TYPOGRAPHY */
+    .page { display: none; animation: appear .25s ease; }
+    .page.active { display: block; }
 
-    h1, h2, h3 { font-family: Manrope, sans-serif; }
-
-    h1 {
-      font-size: clamp(27px, 3vw, 36px);
-      letter-spacing: -1.5px;
-      line-height: 1.25;
-      font-weight: 800;
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--brown);
-      text-transform: uppercase;
-      font-size: 9px;
-      letter-spacing: 2px;
-      font-weight: 700;
-      margin-bottom: 13px;
-    }
-
-    .eyebrow i { font-size: 8px; }
-
-    .intro {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-      margin-top: 11px;
-      max-width: 620px;
-    }
-
-    /* HERO */
-
-    .hero {
+    .welcome {
       position: relative;
       overflow: hidden;
-      border-radius: 22px;
-      background: linear-gradient(115deg, #f0e5d7 0%, #f8f2ea 53%, #eee1d1 100%);
-      padding: 37px 38px;
-      margin-bottom: 25px;
-      min-height: 220px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 25px;
+      gap: 24px;
+      min-height: 225px;
+      padding: 34px 38px;
+      border-radius: 23px;
+      background: linear-gradient(115deg, #eee4d6 0%, #f5efe6 60%, #e6d6c1 100%);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 290px;
-      height: 290px;
-      border: 1px solid #b58a6230;
-      border-radius: 50%;
-      right: -50px;
-      top: -100px;
-      box-shadow: 0 0 0 30px #b58a6208, 0 0 0 60px #b58a6207;
-      pointer-events: none;
-    }
+    .welcome-copy { position: relative; z-index: 1; max-width: 570px; }
 
-    .hero-copy { position: relative; z-index: 1; max-width: 620px; }
-    .hero h1 span { color: var(--brown-dark); }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 23px;
-    }
-
-    .btn {
-      border: 1px solid transparent;
-      border-radius: 10px;
-      padding: 12px 15px;
+    .welcome-tag {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 9px;
+      gap: 8px;
+      margin-bottom: 15px;
+      color: var(--brown-dark);
       font-size: 11px;
       font-weight: 700;
-      transition: transform .2s, box-shadow .2s, background .2s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn-primary {
-      background: var(--brown-dark);
-      color: white;
-      box-shadow: 0 5px 14px #70523720;
+    .welcome h2 {
+      margin: 0 0 12px;
+      font: 800 clamp(25px, 3vw, 34px)/1.25 Manrope, sans-serif;
+      letter-spacing: -1px;
     }
 
-    .btn-primary:hover { background: #5f442c; }
+    .welcome p { max-width: 480px; margin: 0; color: #766957; }
 
-    .btn-secondary {
-      border-color: #d9c8b5;
-      background: #ffffff80;
-      color: var(--brown-dark);
-    }
-
-    .hero-symbol {
-      position: relative;
-      z-index: 1;
-      flex-shrink: 0;
-      width: 130px;
-      height: 130px;
+    .welcome-art {
       display: grid;
       place-items: center;
-      color: #a17d58;
-      border: 1px solid #b58a6250;
+      flex: 0 0 145px;
+      width: 145px;
+      height: 145px;
+      border: 1px solid rgba(117, 88, 60, .18);
       border-radius: 50%;
-      background: #ffffff30;
-      font-size: 44px;
+      color: var(--brown-dark);
+      font-size: 53px;
     }
 
-    /* STAT CARDS */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 32px 0 16px;
+    }
+
+    .section-heading h3 {
+      margin: 0;
+      font: 800 17px Manrope, sans-serif;
+    }
+
+    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin-bottom: 36px;
+      gap: 15px;
+      margin-top: 23px;
     }
 
-    .stat-card {
-      background: var(--white);
+    .stat-card, .card {
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
-      transition: transform .25s, box-shadow .25s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-4px);
       box-shadow: var(--shadow);
     }
 
-    .stat-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .stat-label { color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .stat-card { padding: 20px; }
 
-    .stat-icon {
-      width: 34px;
-      height: 34px;
-      flex-shrink: 0;
-      border-radius: 11px;
-      display: grid;
-      place-items: center;
-      background: var(--surface);
-      color: var(--brown);
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
       font-size: 12px;
     }
 
-    .stat-number {
-      font-family: Manrope, sans-serif;
-      font-size: 27px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-top: 16px;
-    }
-
-    .stat-note { color: var(--muted); font-size: 9px; line-height: 1.6; margin-top: 5px; }
-
-    /* PILLARS */
-
-    .section-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 17px;
-    }
-
-    .section-heading h2 {
-      font-size: 19px;
-      letter-spacing: -.6px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 6px;
-      line-height: 1.7;
-    }
-
-    .text-button {
-      background: transparent;
-      border: none;
-      color: var(--brown-dark);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 8px 0;
-      white-space: nowrap;
-    }
-
-    .text-button:hover { text-decoration: underline; }
-
-    .pillars {
+    .stat-icon {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 15px;
-      margin-bottom: 36px;
+      place-items: center;
+      width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      color: var(--brown-dark);
     }
 
-    .pillar-card {
-      background: white;
+    .stat-number {
+      margin: 13px 0 2px;
+      font: 800 27px Manrope, sans-serif;
+    }
+
+    .stat-note { color: var(--muted); font-size: 11px; }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card { padding: 23px; min-width: 0; }
+    .card h3 { margin: 0; font: 800 16px Manrope, sans-serif; }
+    .card-subtitle { margin: 5px 0 18px; color: var(--muted); font-size: 12px; }
+
+    .empty {
+      display: grid;
+      justify-items: center;
+      padding: 32px 16px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      display: grid;
+      place-items: center;
+      width: 55px;
+      height: 55px;
+      margin-bottom: 13px;
+      border-radius: 17px;
+      background: var(--surface-soft);
+      color: var(--brown);
+      font-size: 21px;
+    }
+
+    .empty strong { font-size: 13px; }
+    .empty p { max-width: 300px; margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+
+    .pillar-list { display: grid; gap: 12px; }
+
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 21px 19px;
-      min-height: 180px;
-      transition: transform .25s, box-shadow .25s;
-    }
-
-    .pillar-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-
-    .pillar-number {
-      font-size: 9px;
-      color: #b5a18b;
-      letter-spacing: 1px;
-      font-weight: 700;
+      border-radius: 13px;
     }
 
     .pillar-icon {
       display: grid;
       place-items: center;
-      width: 40px;
+      flex: 0 0 40px;
       height: 40px;
-      background: var(--surface);
-      color: var(--brown);
-      border-radius: 13px;
-      margin: 16px 0 14px;
-      font-size: 15px;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      color: var(--brown-dark);
     }
 
-    .pillar-card h3 { font-size: 12px; line-height: 1.6; }
-    .pillar-card p { color: var(--muted); font-size: 10px; line-height: 1.8; margin-top: 8px; }
+    .pillar strong { display: block; font-size: 12px; }
+    .pillar span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
 
-    /* PANELS */
-
-    .lower-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 19px;
-    }
-
-    .panel {
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: var(--radius);
-      padding: 23px;
-      min-width: 0;
-    }
-
-    .panel-title {
-      font-family: Manrope, sans-serif;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .panel-subtitle {
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.8;
-      margin-top: 6px;
-      margin-bottom: 18px;
-    }
-
-    .activity-list { display: grid; gap: 17px; }
-
-    .activity-item { display: flex; align-items: flex-start; gap: 11px; }
-
-    .activity-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 11px;
-      background: var(--surface);
-      color: var(--brown);
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      flex-shrink: 0;
-    }
-
-    .activity-item strong { font-size: 10px; display: block; line-height: 1.6; }
-    .activity-item p { font-size: 10px; color: var(--muted); line-height: 1.7; margin-top: 4px; }
-
-    .quote-card {
-      margin-top: 19px;
-      background: #f6f0e7;
-      border-radius: 13px;
-      padding: 16px;
-    }
-
-    .quote-card i { color: var(--brown); font-size: 14px; }
-    .quote-card p {
-      font-family: Manrope, sans-serif;
-      font-size: 11px;
-      line-height: 1.9;
-      margin-top: 8px;
-      font-weight: 600;
-    }
-
-    .quote-card span { display: block; color: var(--muted); font-size: 9px; margin-top: 8px; }
-
-    /* PAGE NAVIGATION */
-
-    .page-view { display: none; }
-    .page-view.active { display: block; animation: appear .35s ease both; }
-
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(9px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .page-header { margin-bottom: 27px; }
-    .page-header h1 { font-size: 29px; }
-
-    .toolbar {
+    .page-intro {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
+      gap: 20px;
+      margin-bottom: 24px;
     }
 
-    .toolbar .search { width: 300px; }
+    .page-intro h2 { margin: 0; font: 800 26px Manrope, sans-serif; letter-spacing: -.6px; }
+    .page-intro p { max-width: 650px; margin: 7px 0 0; color: var(--muted); }
 
-    .empty-state {
-      text-align: center;
-      padding: 48px 25px;
-      border: 1px dashed #d9cfc1;
-      border-radius: var(--radius);
-      background: #fffdf9;
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 16px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: var(--brown);
+      color: white;
+      font-weight: 600;
+      transition: background .2s, transform .2s;
     }
 
-    .empty-icon {
-      width: 55px;
-      height: 55px;
-      margin: 0 auto 17px;
-      display: grid;
-      place-items: center;
-      border-radius: 17px;
-      background: var(--surface);
-      color: var(--brown);
-      font-size: 19px;
+    .button:hover { background: var(--brown-dark); transform: translateY(-1px); }
+    .button.secondary { background: white; border-color: var(--border); color: var(--brown-dark); }
+    .button.secondary:hover { background: var(--surface-soft); }
+    .button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 15px 17px;
+      border: 1px solid var(--brown-light);
+      border-radius: 13px;
+      background: #f6f0e7;
+      color: var(--brown-dark);
     }
 
-    .empty-state h3 { font-size: 15px; }
-    .empty-state p {
-      max-width: 420px;
-      margin: 10px auto 19px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.9;
-    }
+    .notice p { margin: 0; font-size: 12px; }
+    .notice strong { display: block; margin-bottom: 3px; }
 
-    .feature-grid {
+    .pillar-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 17px;
     }
 
-    .feature-card {
+    .pillar-card {
+      padding: 25px;
       background: white;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      transition: transform .2s, box-shadow .2s;
     }
 
-    .feature-card .pillar-icon { margin-top: 0; }
-    .feature-card h3 { font-size: 14px; margin-bottom: 9px; }
-    .feature-card p { color: var(--muted); font-size: 11px; line-height: 1.9; }
+    .pillar-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .pillar-card .big-icon { color: var(--brown); font-size: 24px; }
+    .pillar-card h3 { margin: 14px 0 7px; font: 800 17px Manrope, sans-serif; }
+    .pillar-card p { margin: 0; color: var(--muted); font-size: 13px; }
 
-    .step-list { list-style: none; margin-top: 14px; }
-    .step-list li {
-      padding: 10px 0;
-      border-top: 1px solid var(--border);
-      color: #6f675e;
-      font-size: 10px;
-      line-height: 1.7;
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    .step-list li i { color: var(--brown); margin-right: 8px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-weight: 600; font-size: 12px; }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: 0;
+      background: white;
+      color: var(--text);
+    }
 
-    .settings-row {
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 3px rgba(161, 127, 91, .12);
+    }
+
+    .field textarea { min-height: 100px; resize: vertical; }
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+    .setting-row {
       display: flex;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 15px;
-      align-items: center;
-      padding: 17px 0;
+      gap: 18px;
+      padding: 18px 0;
       border-bottom: 1px solid var(--border);
     }
 
-    .settings-row:last-child { border-bottom: none; }
-    .settings-row strong { font-size: 11px; }
-    .settings-row p { color: var(--muted); font-size: 10px; margin-top: 5px; line-height: 1.7; }
+    .setting-row:last-child { border-bottom: 0; }
+    .setting-row strong { display: block; }
+    .setting-row p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
 
     .status {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      border-radius: 20px;
-      padding: 6px 9px;
-      font-size: 9px;
-      font-weight: 700;
+      gap: 7px;
       white-space: nowrap;
+      color: var(--muted);
+      font-size: 11px;
     }
 
-    .status-demo { background: var(--green-bg); color: var(--green); }
-    .status-pending { background: #f7efe4; color: #a17a4e; }
-    .status-neutral { background: #f0efec; color: #77736c; }
-
-    /* FOOTER & NOTIFICATIONS */
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #c4a16d; }
+    .status.connected .status-dot { background: var(--green); }
 
     .footer {
-      border-top: 1px solid var(--border);
-      margin-top: 35px;
-      padding-top: 19px;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 38px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
       color: var(--muted);
-      font-size: 9px;
-      line-height: 1.8;
+      font-size: 11px;
     }
-
-    .footer strong { color: var(--brown-dark); }
 
     .toast {
       position: fixed;
-      bottom: 24px;
       right: 24px;
-      max-width: min(380px, calc(100vw - 40px));
-      background: #302c27;
-      color: white;
-      padding: 14px 17px;
-      border-radius: 12px;
-      font-size: 11px;
-      line-height: 1.8;
-      box-shadow: 0 10px 35px #0002;
-      z-index: 100;
+      bottom: 24px;
+      z-index: 50;
+      max-width: min(380px, calc(100vw - 32px));
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: white;
+      box-shadow: 0 12px 40px rgba(40, 30, 20, .12);
       opacity: 0;
-      transform: translateY(12px);
       pointer-events: none;
-      transition: opacity .25s, transform .25s;
+      transform: translateY(10px);
+      transition: .25s ease;
     }
 
     .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { border-color: #d9a5a5; color: #8d3434; }
 
-    /* RESPONSIVE */
+    .mobile-nav { display: none; }
 
-    @media (max-width: 1150px) {
-      .sidebar { width: 225px; }
-      .topbar { padding: 0 27px; }
-      .content { padding: 29px 27px 40px; }
-      .stats, .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .hero-symbol { width: 100px; height: 100px; font-size: 34px; }
+    @media (max-width: 1100px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .two-column { grid-template-columns: 1fr; }
+      .content { padding: 26px 24px 45px; }
+      .topbar { padding: 14px 24px; }
     }
 
-    @media (max-width: 800px) {
-      .sidebar {
+    @media (max-width: 760px) {
+      .sidebar { transform: translateX(-100%); box-shadow: none; }
+      .sidebar.open { transform: translateX(0); box-shadow: 15px 0 40px rgba(40, 30, 20, .1); }
+      .main { margin-left: 0; padding-bottom: 70px; }
+      .topbar { min-height: 70px; padding: 12px 16px; }
+      .menu-toggle { display: grid; }
+      .topbar-right .search { display: none; }
+      .content { padding: 22px 16px 35px; }
+      .welcome { min-height: 0; padding: 27px 23px; }
+      .welcome-art { flex-basis: 75px; width: 75px; height: 75px; font-size: 29px; }
+      .welcome h2 { font-size: 25px; }
+      .stats { gap: 10px; }
+      .stat-card { padding: 15px; }
+      .stat-number { font-size: 23px; }
+      .pillar-grid, .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .page-intro { flex-direction: column; }
+      .page-intro h2 { font-size: 23px; }
+      .mobile-nav {
         position: fixed;
-        inset: 0 auto 0 0;
-        width: 270px;
-        transform: translateX(-100%);
-        box-shadow: none;
-        overflow-y: auto;
+        inset: auto 0 0;
+        z-index: 15;
+        display: flex;
+        justify-content: space-around;
+        padding: 9px 4px calc(9px + env(safe-area-inset-bottom));
+        background: rgba(255,255,255,.97);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(12px);
       }
-
-      .sidebar.open {
-        transform: translateX(0);
-        box-shadow: 15px 0 50px #0002;
+      .mobile-nav button {
+        display: grid;
+        justify-items: center;
+        gap: 4px;
+        padding: 5px 8px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font-size: 10px;
       }
-
-      .menu-toggle { display: inline-grid; place-items: center; }
-      .topbar { min-height: 70px; padding: 0 19px; }
-      .content { padding: 24px 19px 35px; }
-      .lower-grid { grid-template-columns: 1fr; }
-      .search { width: 180px; }
-      .hero { padding: 28px; }
+      .mobile-nav button i { font-size: 17px; }
+      .mobile-nav button.active { color: var(--brown-dark); }
+      .footer { flex-direction: column; gap: 5px; }
     }
 
-    @media (max-width: 520px) {
-      .topbar { padding: 0 12px; gap: 9px; }
-      .top-actions { gap: 6px; }
-      .topbar .search { width: 135px; padding: 9px; }
-      .topbar .search input { font-size: 10px; }
-      .topbar .icon-button { width: 35px; height: 35px; }
-      .content { padding: 19px 13px 30px; }
-      .hero { padding: 24px 20px; min-height: auto; }
-      .hero-symbol { display: none; }
-      .hero h1 { font-size: 26px; }
-      .stats { gap: 9px; }
-      .stat-card { padding: 13px; }
-      .stat-number { font-size: 24px; }
-      .stat-label { font-size: 9px; }
-      .stat-icon { width: 29px; height: 29px; }
-      .pillars { gap: 9px; }
-      .pillar-card { padding: 16px 13px; min-height: 170px; }
-      .pillar-card h3 { font-size: 11px; }
-      .section-heading h2 { font-size: 16px; }
-      .panel { padding: 17px; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .toolbar .search { width: 100%; }
-      .toolbar { align-items: stretch; }
-      .page-header h1 { font-size: 25px; }
-      .settings-row { align-items: flex-start; }
-      .settings-row .status { white-space: normal; text-align: center; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
-      }
+    @media (max-width: 380px) {
+      .welcome-art { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat-top { align-items: flex-start; }
     }
   </style>
 </head>
 
 <body>
 <div class="app">
-
   <aside class="sidebar" id="sidebar">
-    <div class="brand">
+    <a class="brand" href="#" data-page="inicio">
       <div class="brand-icon"><i class="fa-solid fa-seedling"></i></div>
       <div>
-        <div class="brand-name">Ministerio Juvenil</div>
-        <div class="brand-sub">Desarrollo & Discipulado</div>
+        <div class="brand-name">Desarrollo Juvenil</div>
+        <div class="brand-sub">Ministerio · Panel de gestión</div>
       </div>
-    </div>
+    </a>
 
-    <div class="nav-group">
-      <div class="nav-label">Principal</div>
-      <button class="nav-link active" data-page="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
-      <button class="nav-link" data-page="jovenes"><i class="fa-solid fa-users"></i> Jóvenes</button>
-      <button class="nav-link" data-page="encuentros"><i class="fa-regular fa-comments"></i> Encuentros personales</button>
-      <button class="nav-link" data-page="desarrollo"><i class="fa-solid fa-chart-line"></i> Desarrollo individual</button>
-      <button class="nav-link" data-page="seguimientos"><i class="fa-regular fa-calendar-check"></i> Seguimientos</button>
-    </div>
+    <div class="nav-label">Espacio de trabajo</div>
+    <nav class="nav" id="mainNav">
+      <button class="active" data-page="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+      <button data-page="jovenes"><i class="fa-solid fa-users"></i> Jóvenes</button>
+      <button data-page="encuentros"><i class="fa-regular fa-comments"></i> Encuentros personales</button>
+      <button data-page="desarrollo"><i class="fa-solid fa-seedling"></i> Desarrollo individual</button>
+      <button data-page="seguimientos"><i class="fa-regular fa-calendar-check"></i> Seguimientos</button>
+      <button data-page="pilares"><i class="fa-solid fa-compass"></i> Los cuatro pilares</button>
+    </nav>
 
-    <div class="nav-group">
-      <div class="nav-label">Fundamento</div>
-      <button class="nav-link" data-page="pilares"><i class="fa-solid fa-compass"></i> Los cuatro pilares</button>
-      <button class="nav-link" data-page="configuracion"><i class="fa-solid fa-sliders"></i> Configuración</button>
-    </div>
+    <div class="nav-label" style="margin-top:30px">Administración</div>
+    <nav class="nav">
+      <button data-page="configuracion"><i class="fa-solid fa-sliders"></i> Configuración</button>
+    </nav>
 
     <div class="sidebar-bottom">
       <div class="mission-mini">
-        <i class="fa-solid fa-heart"></i>
+        <strong><i class="fa-solid fa-heart" style="margin-right:5px"></i> Nuestra misión</strong>
         <p>Conocer a Dios. Crecer en carácter. Vivir con propósito.</p>
-        <span>El crecimiento comienza con una relación.</span>
-      </div>
-      <div class="user-mini">
-        <div class="avatar">MJ</div>
-        <div>
-          <div class="user-name">Ministerio Juvenil</div>
-          <div class="user-role">Vista de demostración</div>
-        </div>
       </div>
     </div>
   </aside>
 
   <main class="main">
     <header class="topbar">
-      <div style="display:flex;align-items:center;gap:13px;">
+      <div class="topbar-left">
         <button class="icon-button menu-toggle" id="menuToggle" aria-label="Abrir menú">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <div class="breadcrumb">Ministerio / <strong id="breadcrumbTitle">Inicio</strong></div>
+        <div>
+          <div class="eyebrow">Ministerio juvenil / Panel</div>
+          <h1 class="page-heading" id="pageHeading">Inicio</h1>
+        </div>
       </div>
-      <div class="top-actions">
+
+      <div class="topbar-right">
         <label class="search">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input id="globalSearch" type="search" placeholder="Buscar sección..." aria-label="Buscar sección">
+          <input id="globalSearch" type="search" placeholder="Buscar una sección..." aria-label="Buscar una sección">
         </label>
-        <button class="icon-button" id="helpButton" aria-label="Información">
+        <button class="icon-button" id="helpButton" aria-label="Ayuda">
           <i class="fa-regular fa-circle-question"></i>
         </button>
       </div>
     </header>
 
     <div class="content">
-
       <!-- INICIO -->
-      <section class="page-view active" id="page-inicio">
-        <div class="hero">
-          <div class="hero-copy">
-            <div class="eyebrow"><i class="fa-solid fa-circle"></i> PANEL DE DESARROLLO</div>
-            <h1>Guiar con amor.<br><span>Desarrollar con propósito.</span></h1>
-            <p class="intro">Un espacio para acompañar a cada joven en su crecimiento espiritual, personal y práctico, reconociendo que cada historia es única.</p>
-            <div class="hero-actions">
-              <button class="btn btn-primary" data-go="jovenes"><i class="fa-solid fa-users"></i> Explorar jóvenes</button>
-              <button class="btn btn-secondary" data-go="pilares"><i class="fa-solid fa-compass"></i> Ver los pilares</button>
-            </div>
+      <section class="page active" id="page-inicio">
+        <div class="welcome">
+          <div class="welcome-copy">
+            <div class="welcome-tag"><i class="fa-solid fa-sun"></i> Un espacio para crecer</div>
+            <h2>Guiar con amor.<br>Acompañar con propósito.</h2>
+            <p>Una herramienta para conocer mejor a cada joven, acompañar su desarrollo y ayudarle a construir una fe personal y auténtica.</p>
           </div>
-          <div class="hero-symbol"><i class="fa-solid fa-seedling"></i></div>
+          <div class="welcome-art"><i class="fa-solid fa-seedling"></i></div>
         </div>
 
         <div class="stats">
           <div class="stat-card">
-            <div class="stat-top"><span class="stat-label">Jóvenes registrados</span><span class="stat-icon"><i class="fa-solid fa-users"></i></span></div>
-            <div class="stat-number">—</div>
-            <div class="stat-note">Pendiente de conectar la base de datos</div>
+            <div class="stat-top"><span>Jóvenes registrados</span><span class="stat-icon"><i class="fa-solid fa-users"></i></span></div>
+            <div class="stat-number" id="studentCount">—</div>
+            <div class="stat-note">Perfiles en el sistema</div>
           </div>
           <div class="stat-card">
-            <div class="stat-top"><span class="stat-label">Encuentros realizados</span><span class="stat-icon"><i class="fa-regular fa-comments"></i></span></div>
-            <div class="stat-number">—</div>
-            <div class="stat-note">Los registros aparecerán aquí</div>
+            <div class="stat-top"><span>Encuentros personales</span><span class="stat-icon"><i class="fa-regular fa-comments"></i></span></div>
+            <div class="stat-number" id="meetingCount">—</div>
+            <div class="stat-note">Conversaciones registradas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-top"><span class="stat-label">Metas en progreso</span><span class="stat-icon"><i class="fa-solid fa-bullseye"></i></span></div>
-            <div class="stat-number">—</div>
-            <div class="stat-note">Seguimiento individual</div>
+            <div class="stat-top"><span>Metas en desarrollo</span><span class="stat-icon"><i class="fa-solid fa-bullseye"></i></span></div>
+            <div class="stat-number" id="goalCount">—</div>
+            <div class="stat-note">Objetivos individuales</div>
           </div>
           <div class="stat-card">
-            <div class="stat-top"><span class="stat-label">Seguimientos pendientes</span><span class="stat-icon"><i class="fa-regular fa-calendar-check"></i></span></div>
-            <div class="stat-number">—</div>
-            <div class="stat-note">Próximos pasos del acompañamiento</div>
+            <div class="stat-top"><span>Seguimientos pendientes</span><span class="stat-icon"><i class="fa-regular fa-calendar"></i></span></div>
+            <div class="stat-number" id="followupCount">—</div>
+            <div class="stat-note">Próximos pasos por atender</div>
           </div>
         </div>
 
-        <div class="section-heading">
-          <div>
-            <h2>Los cuatro pilares</h2>
-            <p>La base que guía cada conversación y cada plan de desarrollo.</p>
-          </div>
-          <button class="text-button" data-go="pilares">Conocer más <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-
-        <div class="pillars">
-          <article class="pillar-card">
-            <div class="pillar-number">PILAR 01</div>
-            <div class="pillar-icon"><i class="fa-solid fa-book-bible"></i></div>
-            <h3>Conocer a Dios</h3>
-            <p>Comprender quién es Dios y crecer en el conocimiento de Su Palabra.</p>
-          </article>
-          <article class="pillar-card">
-            <div class="pillar-number">PILAR 02</div>
-            <div class="pillar-icon"><i class="fa-solid fa-hands-praying"></i></div>
-            <h3>Desarrollar una Relación Personal con Dios</h3>
-            <p>Cultivar una fe personal mediante la oración, la Palabra y la comunión.</p>
-          </article>
-          <article class="pillar-card">
-            <div class="pillar-number">PILAR 03</div>
-            <div class="pillar-icon"><i class="fa-solid fa-seedling"></i></div>
-            <h3>Crecer como Persona</h3>
-            <p>Fortalecer el carácter, las habilidades, la responsabilidad y la madurez.</p>
-          </article>
-          <article class="pillar-card">
-            <div class="pillar-number">PILAR 04</div>
-            <div class="pillar-icon"><i class="fa-solid fa-heart"></i></div>
-            <h3>Vivir la Fe</h3>
-            <p>Poner las convicciones en práctica mediante el servicio y el amor al prójimo.</p>
-          </article>
-        </div>
-
-        <div class="lower-grid">
-          <div class="panel">
-            <div class="panel-title">Espacio de acompañamiento</div>
-            <p class="panel-subtitle">Los perfiles individuales aparecerán aquí cuando la base de datos esté conectada.</p>
-            <div class="empty-state" style="padding:30px 15px;">
-              <div class="empty-icon"><i class="fa-solid fa-user-group"></i></div>
-              <h3>Cada joven, una historia única</h3>
-              <p>El objetivo no es comparar a los jóvenes, sino comprender sus fortalezas, escuchar sus experiencias y acompañarlos en sus próximos pasos.</p>
-              <button class="btn btn-primary" data-go="jovenes">Ir a jóvenes <i class="fa-solid fa-arrow-right"></i></button>
+        <div class="two-column">
+          <div class="card">
+            <h3>Tu espacio de acompañamiento</h3>
+            <p class="card-subtitle">Conoce a cada joven más allá de lo que ves cada semana.</p>
+            <div class="empty">
+              <div class="empty-icon"><i class="fa-solid fa-book-open"></i></div>
+              <strong>Un camino de crecimiento, no una lista de calificaciones</strong>
+              <p>Los perfiles ayudarán a organizar intereses, fortalezas, necesidades de apoyo y metas personales.</p>
             </div>
           </div>
 
-          <div class="panel">
-            <div class="panel-title">Nuestra filosofía</div>
-            <p class="panel-subtitle">Cómo queremos acompañar a cada joven.</p>
-            <div class="activity-list">
-              <div class="activity-item">
-                <div class="activity-icon"><i class="fa-regular fa-heart"></i></div>
-                <div><strong>Escuchar antes de asumir</strong><p>Dar espacio a cada joven para compartir su propia perspectiva.</p></div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon"><i class="fa-solid fa-seedling"></i></div>
-                <div><strong>Guiar, no comparar</strong><p>Reconocer que el crecimiento tiene ritmos y circunstancias diferentes.</p></div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
-                <div><strong>Convertir la fe en acción</strong><p>Practicar el amor, el servicio, la responsabilidad y la compasión.</p></div>
-              </div>
-            </div>
-            <div class="quote-card">
-              <i class="fa-solid fa-quote-left"></i>
-              <p>“Ninguno tenga en poco tu juventud, sino sé ejemplo de los creyentes.”</p>
-              <span>1 Timoteo 4:12</span>
+          <div class="card">
+            <h3>Los cuatro pilares</h3>
+            <p class="card-subtitle">La base de nuestro acompañamiento.</p>
+            <div class="pillar-list">
+              <div class="pillar"><div class="pillar-icon"><i class="fa-solid fa-book-bible"></i></div><div><strong>Conocer a Dios</strong><span>Conocimiento bíblico y comprensión de la fe</span></div></div>
+              <div class="pillar"><div class="pillar-icon"><i class="fa-solid fa-heart"></i></div><div><strong>Relación personal con Dios</strong><span>Oración, reflexión y búsqueda personal</span></div></div>
+              <div class="pillar"><div class="pillar-icon"><i class="fa-solid fa-seedling"></i></div><div><strong>Crecer como persona</strong><span>Carácter, habilidades y madurez</span></div></div>
+              <div class="pillar"><div class="pillar-icon"><i class="fa-solid fa-hands-holding-circle"></i></div><div><strong>Vivir la fe</strong><span>Servicio, amor y acciones cotidianas</span></div></div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- JÓVENES -->
-      <section class="page-view" id="page-jovenes">
-        <div class="page-header">
-          <div class="eyebrow">ACOMPAÑAMIENTO INDIVIDUAL</div>
-          <h1>Jóvenes</h1>
-          <p class="intro">Conoce a cada joven como persona: sus intereses, fortalezas, aspiraciones y áreas en las que desea crecer.</p>
+      <section class="page" id="page-jovenes">
+        <div class="page-intro">
+          <div>
+            <h2>Jóvenes</h2>
+            <p>Perfiles individuales para conocer sus intereses, fortalezas, experiencias y áreas en las que desean crecer.</p>
+          </div>
+          <button class="button" data-action="new-student"><i class="fa-solid fa-plus"></i> Nuevo perfil</button>
         </div>
-        <div class="toolbar">
-          <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="studentSearch" type="search" placeholder="Buscar joven..." aria-label="Buscar joven"></label>
-          <button class="btn btn-primary" data-action="new-student"><i class="fa-solid fa-plus"></i> Agregar joven</button>
+
+        <div class="notice">
+          <i class="fa-solid fa-shield-heart"></i>
+          <p><strong>Un espacio de confianza</strong>Los perfiles deben servir para acompañar a cada joven, no para etiquetarlo ni medir su valor personal o espiritual.</p>
         </div>
-        <div class="empty-state">
-          <div class="empty-icon"><i class="fa-solid fa-user-plus"></i></div>
-          <h3>Los perfiles se administrarán aquí</h3>
-          <p>Esta sección se conectará a Supabase para guardar perfiles, intereses, fortalezas y objetivos. No se almacenan datos reales en esta versión de demostración.</p>
-          <button class="btn btn-secondary" data-action="connection-info"><i class="fa-solid fa-database"></i> Estado de conexión</button>
+
+        <div class="card">
+          <div class="empty">
+            <div class="empty-icon"><i class="fa-solid fa-user-plus"></i></div>
+            <strong>Los perfiles se habilitarán en el siguiente paso</strong>
+            <p>Primero configuraremos el inicio de sesión y probaremos los permisos de acceso. No se ha cargado ningún perfil real en esta interfaz.</p>
+            <button class="button secondary" data-action="connection-info" style="margin-top:16px">Ver estado de conexión</button>
+          </div>
         </div>
       </section>
 
-      <!-- ENCUENTROS PERSONALES -->
-      <section class="page-view" id="page-encuentros">
-        <div class="page-header">
-          <div class="eyebrow">ESCUCHA Y DISCIPULADO</div>
-          <h1>Encuentros personales</h1>
-          <p class="intro">Un espacio para registrar conversaciones individuales con cuidado, respeto y confidencialidad.</p>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-regular fa-comments"></i></div>
-            <h3>Registro de conversaciones</h3>
-            <p>Documenta la fecha, los temas compartidos por el joven, las observaciones relevantes y los próximos pasos acordados.</p>
-            <ul class="step-list">
-              <li><i class="fa-regular fa-calendar"></i> Fecha y responsable del encuentro</li>
-              <li><i class="fa-regular fa-comment-dots"></i> Lo que el joven compartió voluntariamente</li>
-              <li><i class="fa-solid fa-list-check"></i> Próximos pasos y compromisos</li>
-            </ul>
+      <!-- ENCUENTROS -->
+      <section class="page" id="page-encuentros">
+        <div class="page-intro">
+          <div>
+            <h2>Encuentros personales</h2>
+            <p>Un espacio para registrar conversaciones, escuchar a cada joven y dar seguimiento a los compromisos acordados.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-shield-heart"></i></div>
-            <h3>Confidencialidad y cuidado</h3>
-            <p>Los registros deben protegerse y ser accesibles únicamente a las personas autorizadas.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-lock"></i> Acceso restringido por usuario</li>
-              <li><i class="fa-solid fa-user-shield"></i> Conversaciones visibles para su responsable y la administración autorizada</li>
-              <li><i class="fa-solid fa-heart"></i> Escuchar sin juzgar ni etiquetar</li>
-            </ul>
-          </div>
+          <button class="button" data-action="new-meeting"><i class="fa-solid fa-plus"></i> Nuevo encuentro</button>
         </div>
-        <div style="margin-top:20px;" class="empty-state">
-          <div class="empty-icon"><i class="fa-solid fa-database"></i></div>
-          <h3>Los encuentros aparecerán aquí</h3>
-          <p>El formulario y el historial se activarán cuando conectemos la base de datos y probemos los permisos de acceso.</p>
+
+        <div class="notice">
+          <i class="fa-solid fa-lock"></i>
+          <p><strong>Privacidad de las conversaciones</strong>La política prevista permite que el autor de cada registro y el administrador del ministerio puedan leerlo. Verificaremos esta restricción con cuentas de prueba antes de guardar conversaciones reales.</p>
+        </div>
+
+        <div class="card">
+          <div class="empty">
+            <div class="empty-icon"><i class="fa-regular fa-comments"></i></div>
+            <strong>Todavía no hay encuentros conectados</strong>
+            <p>Después de verificar los permisos, podremos registrar fecha, información compartida por el joven, observaciones y próximos pasos.</p>
+          </div>
         </div>
       </section>
 
-      <!-- DESARROLLO INDIVIDUAL -->
-      <section class="page-view" id="page-desarrollo">
-        <div class="page-header">
-          <div class="eyebrow">CRECIMIENTO CON PROPÓSITO</div>
-          <h1>Desarrollo individual</h1>
-          <p class="intro">Planes de crecimiento personales, realistas y revisables, creados con cada joven en lugar de imponerles expectativas.</p>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-bullseye"></i></div>
-            <h3>Metas personales</h3>
-            <p>Cada meta debe ser comprensible, alcanzable y elegida o acordada con el joven.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-check"></i> Definir una meta concreta</li>
-              <li><i class="fa-solid fa-check"></i> Acordar acciones pequeñas y medibles</li>
-              <li><i class="fa-solid fa-check"></i> Revisar avances sin avergonzar</li>
-            </ul>
+      <!-- DESARROLLO -->
+      <section class="page" id="page-desarrollo">
+        <div class="page-intro">
+          <div>
+            <h2>Desarrollo individual</h2>
+            <p>Metas pequeñas, realistas y elegidas en colaboración con cada joven.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-compass"></i></div>
-            <h3>Perfil de desarrollo</h3>
-            <p>Identifica intereses, talentos, habilidades que desea desarrollar y oportunidades de servicio.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-check"></i> Intereses y fortalezas</li>
-              <li><i class="fa-solid fa-check"></i> Habilidades por practicar</li>
-              <li><i class="fa-solid fa-check"></i> Oportunidades de servicio y liderazgo</li>
-            </ul>
+          <button class="button" data-action="new-goal"><i class="fa-solid fa-plus"></i> Nueva meta</button>
+        </div>
+
+        <div class="pillar-grid">
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-compass"></i></div>
+            <h3>Descubrir fortalezas</h3>
+            <p>Reconocer habilidades, intereses, talentos y formas personales de contribuir al grupo.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-seedling"></i></div>
+            <h3>Elegir una meta</h3>
+            <p>Definir un paso concreto, apropiado para su edad y conectado con lo que desea aprender.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-handshake-angle"></i></div>
+            <h3>Ofrecer acompañamiento</h3>
+            <p>Acordar cómo puede ayudar el mentor sin quitarle al joven su voz ni su responsabilidad.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-route"></i></div>
+            <h3>Reflexionar sobre el progreso</h3>
+            <p>Revisar qué funcionó, qué fue difícil y qué ajustes podrían ayudar en el siguiente paso.</p>
           </div>
         </div>
-        <div style="margin-top:20px;" class="empty-state">
-          <div class="empty-icon"><i class="fa-solid fa-chart-line"></i></div>
-          <h3>Planes individuales en preparación</h3>
-          <p>Las metas y su progreso se cargarán desde Supabase una vez que la conexión esté configurada.</p>
+
+        <div class="card" style="margin-top:20px">
+          <h3>Metas individuales</h3>
+          <p class="card-subtitle">Las metas se mostrarán aquí cuando conectemos y verifiquemos la base de datos.</p>
+          <div class="empty"><div class="empty-icon"><i class="fa-solid fa-bullseye"></i></div><strong>Preparados para comenzar</strong><p>No hay metas cargadas en esta interfaz de demostración.</p></div>
         </div>
       </section>
 
       <!-- SEGUIMIENTOS -->
-      <section class="page-view" id="page-seguimientos">
-        <div class="page-header">
-          <div class="eyebrow">CONSTANCIA Y RESPONSABILIDAD</div>
-          <h1>Seguimientos</h1>
-          <p class="intro">Recordatorios y próximos pasos para que las conversaciones se traduzcan en acompañamiento constante.</p>
-        </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-regular fa-calendar-check"></i></div>
-            <h3>Próximos compromisos</h3>
-            <p>Organiza fechas de revisión, acciones acordadas y oportunidades de conversar nuevamente.</p>
+      <section class="page" id="page-seguimientos">
+        <div class="page-intro">
+          <div>
+            <h2>Seguimientos</h2>
+            <p>Recordatorios de próximos pasos, compromisos y acciones de apoyo.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-handshake-angle"></i></div>
-            <h3>Responsables claros</h3>
-            <p>Asigna cada seguimiento a una persona autorizada, con una fecha y una acción concreta.</p>
-          </div>
+          <button class="button" data-action="new-followup"><i class="fa-solid fa-plus"></i> Nuevo seguimiento</button>
         </div>
-        <div style="margin-top:20px;" class="empty-state">
-          <div class="empty-icon"><i class="fa-regular fa-calendar"></i></div>
-          <h3>Aún no hay seguimientos cargados</h3>
-          <p>Los seguimientos se mostrarán aquí cuando la base de datos esté conectada. Esta página no crea ni guarda tareas todavía.</p>
+
+        <div class="card">
+          <div class="empty">
+            <div class="empty-icon"><i class="fa-regular fa-calendar-check"></i></div>
+            <strong>Un acompañamiento que continúa</strong>
+            <p>En esta sección podremos organizar fechas, responsables, tareas pendientes y seguimientos completados.</p>
+          </div>
         </div>
       </section>
 
-      <!-- LOS CUATRO PILARES -->
-      <section class="page-view" id="page-pilares">
-        <div class="page-header">
-          <div class="eyebrow">NUESTRA FUNDACIÓN</div>
-          <h1>Los cuatro pilares</h1>
-          <p class="intro">El marco de desarrollo del ministerio: crecer en conocimiento, relación con Dios, carácter y servicio.</p>
+      <!-- PILARES -->
+      <section class="page" id="page-pilares">
+        <div class="page-intro">
+          <div>
+            <h2>Los cuatro pilares</h2>
+            <p>Una visión integral del crecimiento: conocimiento, relación, carácter y acción.</p>
+          </div>
         </div>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-book-bible"></i></div>
+
+        <div class="pillar-grid">
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-book-bible"></i></div>
             <h3>01 · Conocer a Dios</h3>
-            <p>Explorar las Escrituras, comprender el carácter de Dios y aprender los fundamentos de la fe cristiana.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-book-open"></i> Lectura y comprensión bíblica</li>
-              <li><i class="fa-solid fa-lightbulb"></i> Preguntas y aprendizaje</li>
-              <li><i class="fa-regular fa-comments"></i> Conversaciones sobre la fe</li>
-            </ul>
+            <p>Explorar las Escrituras, aprender los fundamentos de la fe y hacer preguntas con libertad y honestidad.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-hands-praying"></i></div>
-            <h3>02 · Desarrollar una Relación Personal con Dios</h3>
-            <p>Ayudar a cada joven a explorar y cultivar una relación sincera con Dios mediante prácticas espirituales personales.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-praying-hands"></i> Oración personal</li>
-              <li><i class="fa-solid fa-book-open"></i> Reflexión y lectura</li>
-              <li><i class="fa-solid fa-heart"></i> Honestidad y confianza</li>
-            </ul>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-heart"></i></div>
+            <h3>02 · Desarrollar una relación personal con Dios</h3>
+            <p>Aprender sobre la oración, la reflexión, la confianza en Dios y una fe que se desarrolla de manera personal.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-seedling"></i></div>
-            <h3>03 · Crecer como Persona</h3>
-            <p>Fomentar carácter, inteligencia emocional, hábitos saludables, responsabilidad y habilidades prácticas.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-brain"></i> Autoconocimiento</li>
-              <li><i class="fa-solid fa-people-group"></i> Relaciones y comunicación</li>
-              <li><i class="fa-solid fa-list-check"></i> Metas y responsabilidad</li>
-            </ul>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-seedling"></i></div>
+            <h3>03 · Crecer como persona</h3>
+            <p>Practicar responsabilidad, empatía, comunicación, perseverancia, autocuidado y liderazgo de servicio.</p>
           </div>
-          <div class="feature-card">
-            <div class="pillar-icon"><i class="fa-solid fa-heart"></i></div>
-            <h3>04 · Vivir la Fe</h3>
-            <p>Poner en práctica lo aprendido mediante el amor al prójimo, la generosidad, el servicio y el ejemplo personal.</p>
-            <ul class="step-list">
-              <li><i class="fa-solid fa-hand-holding-heart"></i> Servicio a la comunidad</li>
-              <li><i class="fa-solid fa-people-carry-box"></i> Trabajo en equipo</li>
-              <li><i class="fa-solid fa-person-circle-check"></i> Liderazgo con el ejemplo</li>
-            </ul>
+          <div class="pillar-card">
+            <div class="big-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
+            <h3>04 · Vivir la fe</h3>
+            <p>Convertir las convicciones en acciones mediante el servicio, la compasión, la generosidad y el amor al prójimo.</p>
           </div>
+        </div>
+
+        <div class="notice" style="margin-top:20px">
+          <i class="fa-solid fa-lightbulb"></i>
+          <p><strong>Una guía, no una puntuación</strong>Estos pilares orientan las experiencias y las conversaciones. No son una escala para calificar la fe, la dignidad ni la relación personal de un joven con Dios.</p>
         </div>
       </section>
 
       <!-- CONFIGURACIÓN -->
-      <section class="page-view" id="page-configuracion">
-        <div class="page-header">
-          <div class="eyebrow">PREFERENCIAS DEL SISTEMA</div>
-          <h1>Configuración</h1>
-          <p class="intro">Información general y estado del proyecto.</p>
-        </div>
-        <div class="panel">
-          <div class="settings-row">
-            <div><strong>Base de datos</strong><p>Conexión con Supabase para guardar información de forma segura.</p></div>
-            <span class="status status-pending">Pendiente</span>
-          </div>
-          <div class="settings-row">
-            <div><strong>Autenticación</strong><p>Inicio de sesión individual para cada miembro autorizado.</p></div>
-            <span class="status status-pending">Pendiente de integrar</span>
-          </div>
-          <div class="settings-row">
-            <div><strong>Permisos y privacidad</strong><p>Acceso basado en roles y asignaciones, con políticas de seguridad verificadas.</p></div>
-            <span class="status status-neutral">Por probar</span>
-          </div>
-          <div class="settings-row">
-            <div><strong>Versión del sitio</strong><p>Interfaz inicial estática publicada mediante GitHub Pages.</p></div>
-            <span class="status status-demo">Demostración</span>
+      <section class="page" id="page-configuracion">
+        <div class="page-intro">
+          <div>
+            <h2>Configuración</h2>
+            <p>Estado técnico y próximos pasos para habilitar las funciones del panel.</p>
           </div>
         </div>
-        <div class="quote-card" style="margin-top:20px;">
-          <i class="fa-solid fa-shield-heart"></i>
-          <p>La información de los jóvenes debe ser privada. No agregues información real hasta verificar la autenticación y los permisos de acceso.</p>
+
+        <div class="card">
+          <h3>Conexión del sistema</h3>
+          <p class="card-subtitle">El diseño y la conexión inicial se configuran por separado de la autenticación y los datos.</p>
+
+          <div class="setting-row">
+            <div><strong>Interfaz del panel</strong><p>Diseño, navegación y secciones principales.</p></div>
+            <span class="status connected"><span class="status-dot"></span> Disponible</span>
+          </div>
+          <div class="setting-row">
+            <div><strong>Cliente de Supabase</strong><p>Inicialización de la biblioteca en el navegador.</p></div>
+            <span class="status" id="clientStatus"><span class="status-dot"></span> Verificando</span>
+          </div>
+          <div class="setting-row">
+            <div><strong>Inicio de sesión</strong><p>Autenticación para líderes autorizados.</p></div>
+            <span class="status"><span class="status-dot"></span> Pendiente</span>
+          </div>
+          <div class="setting-row">
+            <div><strong>Perfiles y registros</strong><p>Lectura y escritura protegidas por RLS.</p></div>
+            <span class="status"><span class="status-dot"></span> Pendiente de pruebas</span>
+          </div>
+          <div class="setting-row">
+            <div><strong>Privacidad de encuentros</strong><p>El autor y el administrador podrán leer cada conversación.</p></div>
+            <span class="status"><span class="status-dot"></span> Pendiente de pruebas</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <h3>Principios del ministerio</h3>
+          <div class="setting-row">
+            <div><strong>Confidencialidad</strong><p>Recoger únicamente información necesaria para el acompañamiento y restringir el acceso.</p></div>
+            <i class="fa-solid fa-shield-heart" style="color:var(--brown);font-size:20px"></i>
+          </div>
+          <div class="setting-row">
+            <div><strong>Respeto y dignidad</strong><p>Las notas deben ser respetuosas, concretas y distinguir hechos de interpretaciones.</p></div>
+            <i class="fa-solid fa-heart" style="color:var(--brown);font-size:20px"></i>
+          </div>
+          <div class="setting-row">
+            <div><strong>Desarrollo individual</strong><p>Los objetivos deben apoyar al joven, no compararlo con los demás.</p></div>
+            <i class="fa-solid fa-seedling" style="color:var(--brown);font-size:20px"></i>
+          </div>
         </div>
       </section>
 
       <footer class="footer">
-        <span><strong>Ministerio Juvenil</strong> · Desarrollo y discipulado</span>
-        <span>Una herramienta para acompañar, servir y crecer.</span>
+        <span>Desarrollo Juvenil · Ministerio</span>
+        <span>Conocer a Dios. Crecer en carácter. Vivir con propósito.</span>
       </footer>
     </div>
   </main>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Navegación móvil">
+    <button class="active" data-page="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></button>
+    <button data-page="jovenes"><i class="fa-solid fa-users"></i><span>Jóvenes</span></button>
+    <button data-page="encuentros"><i class="fa-regular fa-comments"></i><span>Encuentros</span></button>
+    <button data-page="desarrollo"><i class="fa-solid fa-seedling"></i><span>Desarrollo</span></button>
+    <button data-page="configuracion"><i class="fa-solid fa-sliders"></i><span>Ajustes</span></button>
+  </nav>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- Load the Supabase client before initializing the connection. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-  const navLinks = document.querySelectorAll(".nav-link");
-  const pages = document.querySelectorAll(".page-view");
-  const sidebar = document.getElementById("sidebar");
-  const breadcrumbTitle = document.getElementById("breadcrumbTitle");
-  const toast = document.getElementById("toast");
-  let toastTimer;
+(() => {
+  "use strict";
+
+  const SUPABASE_URL = "https://orlnuaabtqhxosonyhjv.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_CoWVtNZP9HYGdQLVuTXO_Q_UyodoGjx";
 
   const pageNames = {
     inicio: "Inicio",
@@ -1197,46 +934,38 @@
     configuracion: "Configuración"
   };
 
-  function showToast(message) {
+  const sidebar = document.getElementById("sidebar");
+  const toast = document.getElementById("toast");
+  let toastTimer;
+
+  function showToast(message, error = false) {
     toast.textContent = message;
+    toast.classList.toggle("error", error);
     toast.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 3800);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
   }
 
   function navigate(page) {
     if (!pageNames[page]) return;
 
-    pages.forEach(section => section.classList.remove("active"));
-    document.getElementById("page-" + page).classList.add("active");
-
-    navLinks.forEach(link => {
-      link.classList.toggle("active", link.dataset.page === page);
+    document.querySelectorAll(".page").forEach(section => {
+      section.classList.toggle("active", section.id === `page-${page}`);
     });
 
-    breadcrumbTitle.textContent = pageNames[page];
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.classList.toggle("active", button.dataset.page === page);
+    });
+
+    document.getElementById("pageHeading").textContent = pageNames[page];
     sidebar.classList.remove("open");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => navigate(link.dataset.page));
-  });
-
-  document.querySelectorAll("[data-go]").forEach(button => {
-    button.addEventListener("click", () => navigate(button.dataset.go));
-  });
-
-  document.querySelectorAll("[data-action]").forEach(button => {
-    button.addEventListener("click", () => {
-      const action = button.dataset.action;
-
-      if (action === "new-student") {
-        showToast("El formulario de perfiles se habilitará al conectar Supabase. Todavía no se guarda ningún dato.");
-      } else if (action === "connection-info") {
-        navigate("configuracion");
-        showToast("La interfaz está lista para el siguiente paso: integrar la base de datos y el inicio de sesión.");
-      }
+  document.querySelectorAll("[data-page]").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+      navigate(button.dataset.page);
     });
   });
 
@@ -1245,7 +974,7 @@
   });
 
   document.getElementById("helpButton").addEventListener("click", () => {
-    showToast("Esta es una versión visual de demostración. Los datos y el inicio de sesión se conectarán en el siguiente paso.");
+    showToast("El panel está en construcción. El siguiente paso será habilitar el inicio de sesión seguro.");
   });
 
   document.getElementById("globalSearch").addEventListener("keydown", event => {
@@ -1255,23 +984,67 @@
     if (!query) return;
 
     const match = Object.entries(pageNames).find(([key, name]) =>
-      name.toLocaleLowerCase("es").includes(query)
+      key.includes(query) || name.toLocaleLowerCase("es").includes(query)
     );
 
     if (match) {
       navigate(match[0]);
       event.target.value = "";
     } else {
-      showToast("No encontré una sección con ese nombre. Prueba: jóvenes, encuentros, desarrollo o pilares.");
+      showToast("No encontré esa sección. Prueba: jóvenes, encuentros, desarrollo o pilares.");
     }
   });
 
-  document.getElementById("studentSearch").addEventListener("input", event => {
-    const query = event.target.value.trim();
-    if (query) {
-      showToast("La búsqueda de perfiles se activará cuando los jóvenes estén cargados en Supabase.");
-    }
+  document.querySelectorAll("[data-action]").forEach(button => {
+    button.addEventListener("click", () => {
+      const messages = {
+        "new-student": "El formulario de perfiles se habilitará después de verificar el inicio de sesión y los permisos.",
+        "new-meeting": "Los encuentros se habilitarán después de probar las reglas de privacidad.",
+        "new-goal": "Las metas individuales se habilitarán en el siguiente paso.",
+        "new-followup": "Los seguimientos se habilitarán en el siguiente paso.",
+        "connection-info": "Consulta Configuración para ver el estado de la conexión."
+      };
+
+      if (button.dataset.action === "connection-info") navigate("configuracion");
+      showToast(messages[button.dataset.action] || "Esta función estará disponible en un siguiente paso.");
+    });
   });
+
+  // Initialize the public Supabase client. This does not sign anyone in
+  // and does not read or write any database records.
+  try {
+    if (!window.supabase || typeof window.supabase.createClient !== "function") {
+      throw new Error("No se pudo cargar la biblioteca de Supabase.");
+    }
+
+    if (!SUPABASE_URL.startsWith("https://") ||
+        !SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_")) {
+      throw new Error("Revisa la URL del proyecto y la clave publicable.");
+    }
+
+    window.sbClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      }
+    );
+
+    const status = document.getElementById("clientStatus");
+    status.classList.add("connected");
+    status.innerHTML = '<span class="status-dot"></span> Cliente inicializado';
+    console.info("Supabase client initialized.");
+  } catch (error) {
+    console.error("Supabase initialization failed:", error);
+    const status = document.getElementById("clientStatus");
+    status.classList.remove("connected");
+    status.innerHTML = '<span class="status-dot"></span> Error de inicialización';
+  }
+})();
 </script>
 </body>
 </html>
