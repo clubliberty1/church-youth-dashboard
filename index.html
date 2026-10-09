@@ -27,7 +27,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-button,input{font:inherit}button{cursor:pointer}
+button,input{font:inherit}
+button{cursor:pointer}
 button:focus-visible,input:focus-visible{outline:2px solid var(--brown);outline-offset:3px}
 .hidden{display:none!important}
 h1,h2,h3{font-family:Manrope,sans-serif}
@@ -185,10 +186,111 @@ tbody tr:last-child td{border-bottom:0}
 .toast{position:fixed;bottom:24px;right:24px;max-width:min(380px,calc(100vw - 40px));background:#302c27;color:white;padding:14px 17px;border-radius:12px;font-size:11px;line-height:1.8;box-shadow:0 10px 35px #0002;z-index:100;opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s}
 .toast.show{opacity:1;transform:translateY(0)}
 .loading{padding:20px;color:var(--muted);font-size:11px}
-@media(max-width:1150px){.sidebar{width:225px}.topbar{padding:0 27px}.content{padding:29px 27px 40px}.stats,.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-symbol{width:100px;height:100px;font-size:34px}}
-@media(max-width:800px){.login-shell{grid-template-columns:1fr}.login-brand{padding:35px 28px}.login-brand h1{font-size:37px}.login-pillars{display:none}.login-panel{padding:22px 16px 35px}.sidebar{position:fixed;inset:0 auto 0 0;width:270px;transform:translateX(-100%);box-shadow:none;overflow-y:auto}.sidebar.open{transform:translateX(0);box-shadow:15px 0 50px #0002}.menu-toggle{display:inline-grid;place-items:center}.topbar{min-height:70px;padding:0 19px}.content{padding:24px 19px 35px}.lower-grid{grid-template-columns:1fr}.search{width:180px}.hero{padding:28px}}
-@media(max-width:520px){.topbar{padding:0 12px;gap:9px}.top-actions{gap:6px}.topbar .search{width:135px;padding:9px}.topbar .icon-button{width:35px;height:35px}.content{padding:19px 13px 30px}.hero{padding:24px 20px;min-height:auto}.hero-symbol{display:none}.hero h1{font-size:26px}.stats{gap:9px}.stat-card{padding:13px}.stat-number{font-size:24px}.stat-label{font-size:9px}.stat-icon{width:29px;height:29px}.pillars{gap:9px}.pillar-card{padding:16px 13px;min-height:170px}.pillar-card h3{font-size:11px}.section-heading h2{font-size:16px}.data-panel,.panel{padding:17px}.feature-grid{grid-template-columns:1fr}.toolbar .search{width:100%}.toolbar{align-items:stretch}.page-header h1{font-size:25px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* INDIVIDUAL YOUTH PROFILES */
+.student-name-button{
+  border:0;background:transparent;color:var(--brown-dark);
+  font-weight:700;text-align:left;text-decoration:underline;
+  text-decoration-color:#d9c8b5;text-underline-offset:4px;
+  cursor:pointer;line-height:1.7;
+}
+.student-name-button:hover{color:var(--brown);text-decoration-color:var(--brown)}
+.profile-overlay{
+  position:fixed;inset:0;z-index:80;background:rgba(48,44,39,.38);
+  backdrop-filter:blur(4px);padding:22px;display:flex;
+  justify-content:center;align-items:flex-start;overflow-y:auto;
+}
+.profile-overlay.hidden{display:none!important}
+.profile-modal{
+  width:100%;max-width:1000px;margin:auto;background:var(--bg);
+  border:1px solid var(--border);border-radius:22px;
+  box-shadow:0 24px 80px #302c2730;overflow:hidden;
+}
+.profile-top{
+  padding:28px 30px;
+  background:linear-gradient(115deg,#f0e5d7,#f8f2ea 60%,#eee1d1);
+  border-bottom:1px solid var(--border);
+}
+.profile-topline{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;margin-bottom:25px;
+}
+.profile-back{
+  border:1px solid #d9c8b5;background:#ffffff80;color:var(--brown-dark);
+  border-radius:10px;padding:10px 13px;font-size:11px;font-weight:700;
+}
+.profile-heading{display:flex;align-items:center;gap:18px}
+.profile-avatar{
+  display:grid;place-items:center;flex-shrink:0;width:65px;height:65px;
+  border-radius:20px;background:var(--brown-dark);color:white;
+  font-family:Manrope,sans-serif;font-size:22px;font-weight:800;
+}
+.profile-heading h2{font-size:clamp(22px,3vw,30px);overflow-wrap:anywhere}
+.profile-meta{color:#746351;font-size:12px;margin-top:7px}
+.profile-body{padding:26px 30px 32px}
+.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.profile-card{
+  background:white;border:1px solid var(--border);
+  border-radius:var(--radius);padding:21px;min-width:0;
+}
+.profile-card.full-width{grid-column:1/-1}
+.profile-card h3{font-size:13px;margin-bottom:13px}
+.profile-card h3 i{color:var(--brown);margin-right:8px}
+.profile-value{
+  font-size:12px;color:#6f675e;line-height:1.9;
+  overflow-wrap:anywhere;white-space:pre-wrap;
+}
+.profile-empty{color:var(--muted);font-size:11px;line-height:1.8}
+.profile-record{padding:13px 0;border-top:1px solid var(--border)}
+.profile-record:first-of-type{border-top:0;padding-top:0}
+.profile-record strong{display:block;font-size:11px;line-height:1.8;overflow-wrap:anywhere}
+.profile-record p{
+  color:var(--muted);font-size:11px;margin-top:4px;line-height:1.8;
+  overflow-wrap:anywhere;white-space:pre-wrap;
+}
+.profile-record-meta{color:var(--brown);font-size:10px;margin-top:5px}
+.profile-pillar{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--border)}
+.profile-pillar:first-of-type{border-top:0;padding-top:0}
+.profile-pillar>i{color:var(--brown);margin-top:3px}
+.profile-pillar strong{font-size:11px;display:block}
+.profile-pillar p{color:var(--muted);font-size:10px;margin-top:4px;line-height:1.7}
+
+@media(max-width:1150px){
+  .sidebar{width:225px}.topbar{padding:0 27px}.content{padding:29px 27px 40px}
+  .stats,.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero-symbol{width:100px;height:100px;font-size:34px}
+}
+@media(max-width:800px){
+  .login-shell{grid-template-columns:1fr}.login-brand{padding:35px 28px}
+  .login-brand h1{font-size:37px}.login-pillars{display:none}
+  .login-panel{padding:22px 16px 35px}
+  .sidebar{position:fixed;inset:0 auto 0 0;width:270px;transform:translateX(-100%);box-shadow:none;overflow-y:auto}
+  .sidebar.open{transform:translateX(0);box-shadow:15px 0 50px #0002}
+  .menu-toggle{display:inline-grid;place-items:center}
+  .topbar{min-height:70px;padding:0 19px}.content{padding:24px 19px 35px}
+  .lower-grid{grid-template-columns:1fr}.search{width:180px}.hero{padding:28px}
+}
+@media(max-width:600px){
+  .profile-overlay{padding:8px}.profile-top{padding:20px}.profile-body{padding:16px}
+  .profile-grid{grid-template-columns:1fr}.profile-card.full-width{grid-column:auto}
+  .profile-heading{align-items:flex-start;gap:12px}
+  .profile-avatar{width:52px;height:52px;border-radius:15px}
+}
+@media(max-width:520px){
+  .topbar{padding:0 12px;gap:9px}.top-actions{gap:6px}
+  .topbar .search{width:135px;padding:9px}.topbar .icon-button{width:35px;height:35px}
+  .content{padding:19px 13px 30px}.hero{padding:24px 20px;min-height:auto}
+  .hero-symbol{display:none}.hero h1{font-size:26px}.stats{gap:9px}
+  .stat-card{padding:13px}.stat-number{font-size:24px}.stat-label{font-size:9px}
+  .stat-icon{width:29px;height:29px}.pillars{gap:9px}
+  .pillar-card{padding:16px 13px;min-height:170px}.pillar-card h3{font-size:11px}
+  .section-heading h2{font-size:16px}.data-panel,.panel{padding:17px}
+  .feature-grid{grid-template-columns:1fr}.toolbar .search{width:100%}
+  .toolbar{align-items:stretch}.page-header h1{font-size:25px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 
@@ -352,7 +454,7 @@ tbody tr:last-child td{border-bottom:0}
         <div class="lower-grid">
           <div class="panel">
             <div class="panel-title">Espacio de acompañamiento</div>
-            <p class="panel-subtitle">Un resumen de los jóvenes disponibles para tu cuenta.</p>
+            <p class="panel-subtitle">Un resumen de los jóvenes disponibles para tu cuenta. Selecciona un nombre para abrir su perfil.</p>
             <div id="homeStudents" class="loading">Cargando perfiles…</div>
           </div>
           <div class="panel">
@@ -372,7 +474,7 @@ tbody tr:last-child td{border-bottom:0}
       <section class="page-view" id="page-jovenes">
         <div class="page-header"><div class="eyebrow">ACOMPAÑAMIENTO INDIVIDUAL</div><h1>Jóvenes</h1><p class="intro">Conoce a cada joven como persona: sus intereses, fortalezas, aspiraciones y áreas en las que desea crecer.</p></div>
         <div class="toolbar"><label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="studentSearch" type="search" placeholder="Buscar joven..." aria-label="Buscar joven"></label><span class="status">Solo lectura mientras verificamos permisos</span></div>
-        <div class="data-panel"><h2>Perfiles individuales</h2><p>Los perfiles visibles según tus permisos de acceso.</p><div id="studentsTable" class="loading">Cargando jóvenes…</div></div>
+        <div class="data-panel"><h2>Perfiles individuales</h2><p>Selecciona un nombre para ver su perfil, metas y seguimientos disponibles para tu cuenta.</p><div id="studentsTable" class="loading">Cargando jóvenes…</div></div>
       </section>
 
       <!-- ENCUENTROS -->
@@ -433,6 +535,37 @@ tbody tr:last-child td{border-bottom:0}
   </main>
 </div>
 
+<!-- INDIVIDUAL PROFILE WINDOW -->
+<section id="profileOverlay" class="profile-overlay hidden"
+  role="dialog" aria-modal="true" aria-labelledby="profileName">
+  <div class="profile-modal">
+    <div class="profile-top">
+      <div class="profile-topline">
+        <button id="profileBackButton" class="profile-back" type="button">
+          <i class="fa-solid fa-arrow-left"></i> Volver a jóvenes
+        </button>
+        <button id="profileCloseButton" class="icon-button"
+          type="button" aria-label="Cerrar perfil">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="profile-heading">
+        <div class="profile-avatar" id="profileAvatar">—</div>
+        <div>
+          <div class="eyebrow">PERFIL INDIVIDUAL</div>
+          <h2 id="profileName">Perfil del joven</h2>
+          <div class="profile-meta" id="profileMeta"></div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-body">
+      <div id="profileContent" class="profile-grid">
+        <div class="loading">Cargando perfil…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -447,6 +580,10 @@ let recoveryMode = false;
 let dashboardRequest = 0;
 let toastTimer;
 let allStudents = [];
+let allMeetings = [];
+let allGoals = [];
+let allFollowups = [];
+let previousProfileFocus = null;
 
 const pageNames = {
   inicio:"Inicio", jovenes:"Jóvenes", encuentros:"Encuentros personales",
@@ -462,6 +599,8 @@ function showLoginView(view) {
 }
 function showLoginScreen(view="login") {
   $("dashboardScreen").classList.add("hidden");
+  $("profileOverlay").classList.add("hidden");
+  document.body.style.overflow = "";
   $("loginScreen").classList.remove("hidden");
   showLoginView(view);
 }
@@ -529,10 +668,14 @@ function navigate(page) {
   $("sidebar").classList.remove("open");
   window.scrollTo({top:0,behavior:"smooth"});
 }
-document.querySelectorAll(".nav-link").forEach(el => el.addEventListener("click",()=>navigate(el.dataset.page)));
-document.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click",()=>navigate(el.dataset.go)));
+document.querySelectorAll(".nav-link").forEach(el =>
+  el.addEventListener("click",()=>navigate(el.dataset.page))
+);
+document.querySelectorAll("[data-go]").forEach(el =>
+  el.addEventListener("click",()=>navigate(el.dataset.go))
+);
 $("menuToggle").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
-$("helpButton").addEventListener("click",()=>showToast("Los datos se muestran según los permisos de tu cuenta. Los formularios de edición aún no están habilitados."));
+$("helpButton").addEventListener("click",()=>showToast("Los datos se muestran según los permisos de tu cuenta. Los perfiles son de solo lectura; las funciones de edición aún no están habilitadas."));
 $("globalSearch").addEventListener("keydown",event=>{
   if(event.key!=="Enter")return;
   const query=event.target.value.trim().toLocaleLowerCase("es");
@@ -568,7 +711,9 @@ $("forgotForm").addEventListener("submit",async event=>{
   busy("recoveryButton",true,"Enviando…");
   try {
     const redirectTo=window.location.origin+window.location.pathname;
-    const {error}=await sbClient.auth.resetPasswordForEmail($("recoveryEmail").value.trim(),{redirectTo});
+    const {error}=await sbClient.auth.resetPasswordForEmail(
+      $("recoveryEmail").value.trim(),{redirectTo}
+    );
     if(error)showLoginMessage(friendlyError(error),"error");
     else showLoginMessage("Si el correo corresponde a una cuenta, recibirás un enlace de recuperación. Revisa tu bandeja de entrada y la carpeta de spam.","success");
   } catch(error) {showLoginMessage(friendlyError(error),"error");}
@@ -635,7 +780,10 @@ async function authorizeUser(user) {
 
 function renderTable(id,headers,rows,emptyMessage) {
   const el=$(id);
-  if(!rows.length){el.innerHTML='<div class="empty-state" style="padding:25px"><p>'+safe(emptyMessage)+'</p></div>';return;}
+  if(!rows.length){
+    el.innerHTML='<div class="empty-state" style="padding:25px"><p>'+safe(emptyMessage)+'</p></div>';
+    return;
+  }
   el.innerHTML='<div class="table-wrap"><table><thead><tr>'+
     headers.map(h=>"<th>"+safe(h)+"</th>").join("")+
     "</tr></thead><tbody>"+
@@ -651,7 +799,9 @@ async function fetchRows(table,columns) {
 async function loadDashboard() {
   const request=dashboardRequest;
   clearDashboardMessage();
-  ["studentsTable","meetingsTable","goalsTable","followupsTable","homeStudents"].forEach(id=>$(id).innerHTML='<div class="loading">Cargando…</div>');
+
+  ["studentsTable","meetingsTable","goalsTable","followupsTable","homeStudents"]
+    .forEach(id=>$(id).innerHTML='<div class="loading">Cargando…</div>');
 
   const [students,meetings,goals,followups]=await Promise.all([
     fetchRows("students","id,full_name,age,grade,interests,strengths,development_areas"),
@@ -661,6 +811,7 @@ async function loadDashboard() {
   ]);
 
   if(request!==dashboardRequest)return;
+
   const results=[students,meetings,goals,followups];
   if(results.some(result=>result.error)){
     console.error("Dashboard load errors:",results.filter(r=>r.error).map(r=>r.error.message));
@@ -673,68 +824,281 @@ async function loadDashboard() {
   $("followupCount").textContent=followups.error?"—":followups.data.filter(x=>!x.completed_at).length;
 
   allStudents=students.data;
+  allMeetings=meetings.error?[]:meetings.data;
+  allGoals=goals.error?[]:goals.data;
+  allFollowups=followups.error?[]:followups.data;
+
   if(!students.error){
     const studentRows=students.data.map(s=>[
-      safe(s.full_name),safe(s.age??"—"),safe(s.grade??"—"),
-      safe(s.interests??"—"),safe(s.strengths??"—"),safe(s.development_areas??"—")
+      `<button type="button" class="student-name-button" data-open-profile="${safe(s.id)}">${safe(s.full_name)}</button>`,
+      safe(s.age??"—"),
+      safe(s.grade??"—"),
+      safe(s.interests??"—"),
+      safe(s.strengths??"—"),
+      safe(s.development_areas??"—")
     ]);
-    renderTable("studentsTable",["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],studentRows,"Todavía no hay jóvenes registrados.");
-    renderTable("homeStudents",["Nombre","Grado","Fortalezas"],students.data.slice(0,5).map(s=>[
-      safe(s.full_name),safe(s.grade??"—"),safe(s.strengths??"—")
-    ]),"Todavía no hay jóvenes registrados.");
+
+    renderTable(
+      "studentsTable",
+      ["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],
+      studentRows,
+      "Todavía no hay jóvenes registrados."
+    );
+
+    renderTable(
+      "homeStudents",
+      ["Nombre","Grado","Fortalezas"],
+      students.data.slice(0,5).map(s=>[
+        `<button type="button" class="student-name-button" data-open-profile="${safe(s.id)}">${safe(s.full_name)}</button>`,
+        safe(s.grade??"—"),
+        safe(s.strengths??"—")
+      ]),
+      "Todavía no hay jóvenes registrados."
+    );
   } else {
     $("studentsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los perfiles. Revisa los permisos de acceso.</p></div>';
     $("homeStudents").innerHTML='<div class="empty-state"><p>No se pudieron cargar los perfiles.</p></div>';
   }
 
-  if(!meetings.error)renderTable("meetingsTable",["Fecha","ID del joven","Próximos pasos"],meetings.data.map(m=>[
-    safe(dateText(m.meeting_date)),safe(m.student_id),safe(m.next_steps??"—")
-  ]),"Todavía no hay encuentros registrados.");
-  else $("meetingsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los encuentros.</p></div>';
+  if(!meetings.error) {
+    renderTable("meetingsTable",["Fecha","ID del joven","Próximos pasos"],meetings.data.map(m=>[
+      safe(dateText(m.meeting_date)),safe(m.student_id),safe(m.next_steps??"—")
+    ]),"Todavía no hay encuentros registrados.");
+  } else {
+    $("meetingsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los encuentros.</p></div>';
+  }
 
-  if(!goals.error)renderTable("goalsTable",["Meta","Estado","Fecha objetivo"],goals.data.map(g=>[
-    safe(g.goal),safe(g.status??"—"),safe(dateText(g.target_date))
-  ]),"Todavía no hay metas registradas.");
-  else $("goalsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar las metas.</p></div>';
+  if(!goals.error) {
+    renderTable("goalsTable",["Meta","Estado","Fecha objetivo"],goals.data.map(g=>[
+      safe(g.goal),safe(g.status??"—"),safe(dateText(g.target_date))
+    ]),"Todavía no hay metas registradas.");
+  } else {
+    $("goalsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar las metas.</p></div>';
+  }
 
-  if(!followups.error)renderTable("followupsTable",["Seguimiento","Fecha límite","Estado"],followups.data.map(f=>[
-    safe(f.description),safe(dateText(f.due_date)),
-    f.completed_at?'<span class="status">Completado</span>':'<span class="status status-pending">Pendiente</span>'
-  ]),"No hay seguimientos registrados.");
-  else $("followupsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los seguimientos.</p></div>';
+  if(!followups.error) {
+    renderTable("followupsTable",["Seguimiento","Fecha límite","Estado"],followups.data.map(f=>[
+      safe(f.description),safe(dateText(f.due_date)),
+      f.completed_at?'<span class="status">Completado</span>':'<span class="status status-pending">Pendiente</span>'
+    ]),"No hay seguimientos registrados.");
+  } else {
+    $("followupsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los seguimientos.</p></div>';
+  }
 }
 
+/* PROFILE HELPERS */
+function profileSection(title,icon,content) {
+  return `
+    <article class="profile-card">
+      <h3><i class="${icon}"></i>${safe(title)}</h3>
+      <div class="profile-value">${content || '<span class="profile-empty">Aún no hay información registrada.</span>'}</div>
+    </article>
+  `;
+}
+
+function profileRecord(title,description,meta="") {
+  return `
+    <div class="profile-record">
+      <strong>${safe(title)}</strong>
+      ${description ? `<p>${safe(description)}</p>` : ""}
+      ${meta ? `<div class="profile-record-meta">${safe(meta)}</div>` : ""}
+    </div>
+  `;
+}
+
+function openStudentProfile(studentId) {
+  const student=allStudents.find(s=>String(s.id)===String(studentId));
+
+  if(!student) {
+    showToast("No encontré ese perfil entre los registros disponibles.");
+    return;
+  }
+
+  previousProfileFocus=document.activeElement;
+
+  $("profileName").textContent=student.full_name||"Perfil del joven";
+  $("profileAvatar").textContent=(student.full_name||"?")
+    .trim().split(/\s+/).slice(0,2)
+    .map(part=>part[0]||"").join("").toUpperCase();
+
+  const meta=[];
+  if(student.age!==null&&student.age!==undefined&&student.age!=="")
+    meta.push(`${student.age} años`);
+  if(student.grade)meta.push(student.grade);
+  $("profileMeta").textContent=meta.join(" · ")||"Información personal";
+
+  const meetings=allMeetings
+    .filter(m=>String(m.student_id)===String(student.id))
+    .sort((a,b)=>String(b.meeting_date||"").localeCompare(String(a.meeting_date||"")));
+
+  const goals=allGoals.filter(g=>String(g.student_id)===String(student.id));
+
+  const followups=allFollowups
+    .filter(f=>String(f.student_id)===String(student.id))
+    .sort((a,b)=>String(a.due_date||"").localeCompare(String(b.due_date||"")));
+
+  const meetingContent=meetings.length
+    ?meetings.map(m=>profileRecord(
+      `Encuentro · ${dateText(m.meeting_date)}`,
+      m.next_steps||"No se registraron próximos pasos."
+    )).join("")
+    :'<p class="profile-empty">Todavía no hay encuentros registrados para este perfil.</p>';
+
+  const goalContent=goals.length
+    ?goals.map(g=>profileRecord(
+      g.goal||"Meta sin título",
+      `Estado: ${g.status||"No especificado"}`,
+      g.target_date?`Fecha objetivo: ${dateText(g.target_date)}`:""
+    )).join("")
+    :'<p class="profile-empty">Todavía no hay metas registradas para este perfil.</p>';
+
+  const followupContent=followups.length
+    ?followups.map(f=>profileRecord(
+      f.description||"Seguimiento sin descripción",
+      f.completed_at?"Completado":"Pendiente",
+      f.due_date?`Fecha límite: ${dateText(f.due_date)}`:""
+    )).join("")
+    :'<p class="profile-empty">Todavía no hay seguimientos registrados para este perfil.</p>';
+
+  const pillars=`
+    <div class="profile-pillar">
+      <i class="fa-solid fa-book-bible"></i>
+      <div><strong>01 · Conocer a Dios</strong>
+      <p>Aprendizaje, preguntas y comprensión de las Escrituras.</p></div>
+    </div>
+    <div class="profile-pillar">
+      <i class="fa-solid fa-hands-praying"></i>
+      <div><strong>02 · Desarrollar una Relación Personal con Dios</strong>
+      <p>Oración, reflexión y una relación personal y sincera con Dios.</p></div>
+    </div>
+    <div class="profile-pillar">
+      <i class="fa-solid fa-seedling"></i>
+      <div><strong>03 · Crecer como Persona</strong>
+      <p>Carácter, habilidades, responsabilidad y metas personales.</p></div>
+    </div>
+    <div class="profile-pillar">
+      <i class="fa-solid fa-heart"></i>
+      <div><strong>04 · Vivir la Fe</strong>
+      <p>Servicio, compasión, liderazgo y acciones que reflejan sus convicciones.</p></div>
+    </div>`;
+
+  $("profileContent").innerHTML=`
+    ${profileSection("Intereses","fa-solid fa-compass",safe(student.interests))}
+    ${profileSection("Fortalezas","fa-solid fa-seedling",safe(student.strengths))}
+    ${profileSection("Áreas en las que desea crecer","fa-solid fa-arrow-trend-up",safe(student.development_areas))}
+    <article class="profile-card">
+      <h3><i class="fa-solid fa-bullseye"></i>Metas individuales (${goals.length})</h3>
+      ${goalContent}
+    </article>
+    <article class="profile-card">
+      <h3><i class="fa-regular fa-calendar-check"></i>Seguimientos (${followups.length})</h3>
+      ${followupContent}
+    </article>
+    <article class="profile-card">
+      <h3><i class="fa-regular fa-comments"></i>Encuentros personales (${meetings.length})</h3>
+      ${meetingContent}
+    </article>
+    <article class="profile-card full-width">
+      <h3><i class="fa-solid fa-compass"></i>Marco de desarrollo: los cuatro pilares</h3>
+      ${pillars}
+      <p class="profile-empty" style="margin-top:12px">
+        Estos pilares orientan las conversaciones; no son puntuaciones ni evaluaciones de la fe de una persona.
+      </p>
+    </article>
+  `;
+
+  $("profileOverlay").classList.remove("hidden");
+  document.body.style.overflow="hidden";
+  $("profileCloseButton").focus();
+}
+
+function closeStudentProfile() {
+  $("profileOverlay").classList.add("hidden");
+  document.body.style.overflow="";
+
+  if(previousProfileFocus&&typeof previousProfileFocus.focus==="function") {
+    previousProfileFocus.focus();
+  }
+}
+
+/* Open a profile from any clickable youth name. */
+document.addEventListener("click",event=>{
+  const button=event.target.closest("[data-open-profile]");
+  if(button)openStudentProfile(button.dataset.openProfile);
+});
+
+$("profileBackButton").addEventListener("click",closeStudentProfile);
+$("profileCloseButton").addEventListener("click",closeStudentProfile);
+
+$("profileOverlay").addEventListener("click",event=>{
+  if(event.target===$("profileOverlay"))closeStudentProfile();
+});
+
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"&&!$("profileOverlay").classList.contains("hidden")) {
+    closeStudentProfile();
+  }
+});
+
+/* Filter youth records without enabling editing. */
 $("studentSearch").addEventListener("input",event=>{
   const q=event.target.value.trim().toLocaleLowerCase("es");
   const filtered=allStudents.filter(s=>
     [s.full_name,s.grade,s.interests,s.strengths,s.development_areas]
       .some(v=>String(v??"").toLocaleLowerCase("es").includes(q))
   );
-  renderTable("studentsTable",["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],filtered.map(s=>[
-    safe(s.full_name),safe(s.age??"—"),safe(s.grade??"—"),safe(s.interests??"—"),safe(s.strengths??"—"),safe(s.development_areas??"—")
-  ]),q?"No se encontraron jóvenes con esa búsqueda.":"Todavía no hay jóvenes registrados.");
+
+  renderTable(
+    "studentsTable",
+    ["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],
+    filtered.map(s=>[
+      `<button type="button" class="student-name-button" data-open-profile="${safe(s.id)}">${safe(s.full_name)}</button>`,
+      safe(s.age??"—"),
+      safe(s.grade??"—"),
+      safe(s.interests??"—"),
+      safe(s.strengths??"—"),
+      safe(s.development_areas??"—")
+    ]),
+    q?"No se encontraron jóvenes con esa búsqueda.":"Todavía no hay jóvenes registrados."
+  );
 });
 
 $("logoutButton").addEventListener("click",async()=>{
   $("logoutButton").disabled=true;
   const {error}=await sbClient.auth.signOut();
   $("logoutButton").disabled=false;
-  if(error){showDashboardMessage("No se pudo cerrar sesión: "+error.message,"error");return;}
+
+  if(error){
+    showDashboardMessage("No se pudo cerrar sesión: "+error.message,"error");
+    return;
+  }
+
   dashboardRequest++;
   allStudents=[];
+  allMeetings=[];
+  allGoals=[];
+  allFollowups=[];
   showLoginScreen("login");
 });
 
 async function initializeApp() {
   const url=new URL(window.location.href);
   const authError=url.searchParams.get("error_description");
+
   if(authError){
     showLoginScreen("login");
     showLoginMessage("El enlace de autenticación tuvo un problema. Solicita un enlace nuevo. Detalle: "+authError,"error");
     return;
   }
+
   const {data,error}=await sbClient.auth.getSession();
-  if(error){showLoginScreen("login");showLoginMessage(friendlyError(error),"error");return;}
+
+  if(error){
+    showLoginScreen("login");
+    showLoginMessage(friendlyError(error),"error");
+    return;
+  }
+
   if(recoveryMode)return;
   if(data.session?.user)await authorizeUser(data.session.user);
   else showLoginScreen("login");
