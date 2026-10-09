@@ -1,10 +1,12 @@
-```html
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Youth Development Dashboard</title>
+  <meta name="description" content="Panel de desarrollo juvenil y discipulado cristiano">
+  <title>Panel de Desarrollo Juvenil</title>
+
   <style>
     :root {
       --navy: #172b4d;
@@ -55,55 +57,65 @@
       border-left: 5px solid var(--blue);
     }
 
-    .mission h2 {
-      margin-top: 0;
+    .mission h2,
+    .section-title {
       color: var(--navy);
     }
 
-    .cards {
+    .cards,
+    .pillars,
+    .students {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
     }
 
-    .card {
+    .card,
+    .pillar,
+    .student-card {
       background: white;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 2px 8px #172b4d0d;
     }
 
-    .card h3 {
-      color: var(--navy);
+    .card h3,
+    .student-card h3 {
       margin-top: 0;
+      color: var(--navy);
     }
 
     .number {
-      font-size: 30px;
+      font-size: 27px;
       font-weight: bold;
       color: var(--blue);
     }
 
     .section-title {
       margin: 30px 0 14px;
-      color: var(--navy);
-    }
-
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-
-    .pillar {
-      background: white;
-      padding: 18px;
-      border-radius: 10px;
     }
 
     .pillar h3 {
       margin-top: 0;
       color: var(--blue);
+    }
+
+    .student-card {
+      border: 1px solid #e2e6ed;
+    }
+
+    .student-card p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .student-status {
+      display: inline-block;
+      background: #e8eef6;
+      color: var(--navy);
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
     }
 
     footer {
@@ -114,76 +126,122 @@
     }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Youth Development Dashboard</h1>
-    <p>Know God. Grow in character. Live with purpose.</p>
+    <h1>Panel de Desarrollo Juvenil</h1>
+    <p>Conocer a Dios. Crecer en carácter. Vivir con propósito.</p>
   </header>
 
   <main>
     <section class="mission">
-      <h2>Our Mission</h2>
+      <h2>Nuestra Misión</h2>
       <p>
-        To help each student develop a personal relationship with God,
-        grow in character, discover their strengths, and live out their
-        faith through practical action and service.
+        Acompañar a cada joven en el desarrollo de una relación personal
+        con Dios, el crecimiento en carácter, el descubrimiento de sus
+        fortalezas y la práctica de su fe mediante acciones concretas
+        y el servicio a los demás.
       </p>
     </section>
 
     <section class="cards">
       <div class="card">
-        <h3>Students</h3>
+        <h3>Jóvenes</h3>
         <div class="number">8</div>
-        <p>Individual journeys of growth</p>
+        <p>Un proceso de crecimiento para cada persona</p>
       </div>
 
       <div class="card">
-        <h3>Personal Tour</h3>
-        <div class="number">Weekly</div>
-        <p>One-on-one conversations and follow-ups</p>
+        <h3>Encuentro Personal</h3>
+        <div class="number">Semanal</div>
+        <p>Conversaciones individuales y seguimiento</p>
       </div>
 
       <div class="card">
-        <h3>Development</h3>
+        <h3>Desarrollo</h3>
         <div class="number">4</div>
-        <p>Core pillars guiding the program</p>
+        <p>Pilares que orientan el programa</p>
       </div>
 
       <div class="card">
-        <h3>Next Steps</h3>
-        <div class="number">Ongoing</div>
-        <p>Goals, encouragement, and practical actions</p>
+        <h3>Próximos Pasos</h3>
+        <div class="number">Continuo</div>
+        <p>Metas, acompañamiento y acciones prácticas</p>
       </div>
     </section>
 
-    <h2 class="section-title">Our Four Pillars</h2>
+    <h2 class="section-title">Nuestros Cuatro Pilares</h2>
 
     <section class="pillars">
       <div class="pillar">
-        <h3>1. Know God</h3>
-        <p>Understand God's character, Jesus, Scripture, and biblical truth.</p>
+        <h3>1. Conocer a Dios</h3>
+        <p>
+          Comprender el carácter de Dios, conocer a Jesús y profundizar
+          en las Escrituras y la verdad bíblica.
+        </p>
       </div>
 
       <div class="pillar">
-        <h3>2. Know God Personally</h3>
-        <p>Grow through prayer, worship, reflection, and honest questions.</p>
+        <h3>2. Desarrollar una Relación Personal con Dios</h3>
+        <p>
+          Crecer mediante la oración, la adoración, la reflexión y las
+          preguntas sinceras.
+        </p>
       </div>
 
       <div class="pillar">
-        <h3>3. Grow as an Individual</h3>
-        <p>Discover strengths, develop character, and work through challenges.</p>
+        <h3>3. Crecer como Persona</h3>
+        <p>
+          Descubrir fortalezas, desarrollar el carácter y aprender a
+          enfrentar desafíos personales.
+        </p>
       </div>
 
       <div class="pillar">
-        <h3>4. Live Out the Faith</h3>
-        <p>Practice service, integrity, responsibility, love, and forgiveness.</p>
+        <h3>4. Vivir la Fe</h3>
+        <p>
+          Practicar el servicio, la integridad, la responsabilidad,
+          el amor y el perdón en la vida cotidiana.
+        </p>
+      </div>
+    </section>
+
+    <h2 class="section-title">Directorio de Jóvenes</h2>
+
+    <p>
+      Cada joven tiene una historia y un proceso únicos. Nuestro objetivo
+      es conocerlos, animarlos y acompañarlos en su crecimiento.
+    </p>
+
+    <section class="students">
+      <div class="student-card">
+        <h3>Joven 01</h3>
+        <span class="student-status">Perfil pendiente</span>
+        <p><strong>Fortalezas:</strong> Por descubrir</p>
+        <p><strong>Intereses:</strong> Por conocer</p>
+        <p><strong>Áreas de crecimiento:</strong> Por explorar juntos</p>
+      </div>
+
+      <div class="student-card">
+        <h3>Joven 02</h3>
+        <span class="student-status">Perfil pendiente</span>
+        <p><strong>Fortalezas:</strong> Por descubrir</p>
+        <p><strong>Intereses:</strong> Por conocer</p>
+        <p><strong>Áreas de crecimiento:</strong> Por explorar juntos</p>
+      </div>
+
+      <div class="student-card">
+        <h3>Joven 03</h3>
+        <span class="student-status">Perfil pendiente</span>
+        <p><strong>Fortalezas:</strong> Por descubrir</p>
+        <p><strong>Intereses:</strong> Por conocer</p>
+        <p><strong>Áreas de crecimiento:</strong> Por explorar juntos</p>
       </div>
     </section>
   </main>
 
   <footer>
-    Youth Development & Discipleship Program
+    Programa de Desarrollo Juvenil y Discipulado
   </footer>
 </body>
 </html>
-```
