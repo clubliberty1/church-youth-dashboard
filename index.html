@@ -1,0 +1,189 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youth Development Dashboard</title>
+  <style>
+    :root {
+      --navy: #172b4d;
+      --blue: #284b75;
+      --cream: #f7f5f0;
+      --white: #ffffff;
+      --muted: #687386;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--cream);
+      color: #202b3c;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 28px 24px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    header p {
+      margin: 0;
+      color: #dce5f0;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 20px;
+    }
+
+    .mission {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 24px;
+      border-left: 5px solid var(--blue);
+    }
+
+    .mission h2 {
+      margin-top: 0;
+      color: var(--navy);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px #172b4d0d;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin-top: 0;
+    }
+
+    .number {
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--blue);
+    }
+
+    .section-title {
+      margin: 30px 0 14px;
+      color: var(--navy);
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .pillar {
+      background: white;
+      padding: 18px;
+      border-radius: 10px;
+    }
+
+    .pillar h3 {
+      margin-top: 0;
+      color: var(--blue);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Youth Development Dashboard</h1>
+    <p>Know God. Grow in character. Live with purpose.</p>
+  </header>
+
+  <main>
+    <section class="mission">
+      <h2>Our Mission</h2>
+      <p>
+        To help each student develop a personal relationship with God,
+        grow in character, discover their strengths, and live out their
+        faith through practical action and service.
+      </p>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Students</h3>
+        <div class="number">8</div>
+        <p>Individual journeys of growth</p>
+      </div>
+
+      <div class="card">
+        <h3>Personal Tour</h3>
+        <div class="number">Weekly</div>
+        <p>One-on-one conversations and follow-ups</p>
+      </div>
+
+      <div class="card">
+        <h3>Development</h3>
+        <div class="number">4</div>
+        <p>Core pillars guiding the program</p>
+      </div>
+
+      <div class="card">
+        <h3>Next Steps</h3>
+        <div class="number">Ongoing</div>
+        <p>Goals, encouragement, and practical actions</p>
+      </div>
+    </section>
+
+    <h2 class="section-title">Our Four Pillars</h2>
+
+    <section class="pillars">
+      <div class="pillar">
+        <h3>1. Know God</h3>
+        <p>Understand God's character, Jesus, Scripture, and biblical truth.</p>
+      </div>
+
+      <div class="pillar">
+        <h3>2. Know God Personally</h3>
+        <p>Grow through prayer, worship, reflection, and honest questions.</p>
+      </div>
+
+      <div class="pillar">
+        <h3>3. Grow as an Individual</h3>
+        <p>Discover strengths, develop character, and work through challenges.</p>
+      </div>
+
+      <div class="pillar">
+        <h3>4. Live Out the Faith</h3>
+        <p>Practice service, integrity, responsibility, love, and forgiveness.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Youth Development & Discipleship Program
+  </footer>
+</body>
+</html>
+```
