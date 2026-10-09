@@ -2,1080 +2,745 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#172b4d">
-  <title>Conocer · Crecer · Vivir | Ministerio Juvenil</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#faf8f4">
+<meta name="description" content="Plataforma de desarrollo personal, discipulado y acompañamiento juvenil.">
+<title>Ministerio Juvenil | Desarrollo y Discipulado</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    :root {
-      --navy: #172b4d;
-      --navy2: #223c63;
-      --red: #a94442;
-      --bg: #f4f6fa;
-      --white: #fff;
-      --text: #253247;
-      --muted: #718096;
-      --border: #e4e9f1;
-      --green: #287a58;
-      --shadow: 0 8px 28px rgba(23,43,77,.07);
-    }
+<style>
+:root {
+  --bg:#faf8f4; --white:#fff; --surface:#f6f1ea;
+  --surface-hover:#eee3d5; --brown:#a17f5b;
+  --brown-dark:#75583c; --brown-light:#e9d9c6;
+  --text:#302c27; --muted:#898176; --border:#ebe4da;
+  --green:#65806a; --green-bg:#edf3eb;
+  --rose:#a7746e; --rose-bg:#f8eeeb;
+  --shadow:0 12px 40px rgba(76,57,37,.055);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--brown);outline-offset:3px}
+.hidden{display:none!important}
+h1,h2,h3{font-family:Manrope,sans-serif}
+p{line-height:1.8}
+.app{display:flex;min-height:100vh}
+.btn{border:1px solid transparent;border-radius:10px;padding:12px 15px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:11px;font-weight:700;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-primary{background:var(--brown-dark);color:white}
+.btn-primary:hover{background:#5f442c}
+.btn-secondary{border-color:#d9c8b5;background:#ffffff80;color:var(--brown-dark)}
+.btn-full{width:100%;margin-top:20px}
+.text-button{background:transparent;border:0;color:var(--brown-dark);font-size:11px;font-weight:700;padding:10px 0}
+.text-button:hover{text-decoration:underline}
+input{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 13px;background:white;color:var(--text);font-size:13px}
+input:focus{outline:2px solid #a17f5b45;border-color:var(--brown)}
+.field-label{display:block;margin:17px 0 7px;font-size:11px;font-weight:700}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--brown);text-transform:uppercase;font-size:9px;letter-spacing:2px;font-weight:700;margin-bottom:13px}
+.intro{color:var(--muted);font-size:12px;line-height:1.9;margin-top:11px;max-width:650px}
+.notice{padding:12px 14px;margin-top:16px;border-radius:10px;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.notice.error{color:#8a2929;background:#fff0f0;border:1px solid #f0caca}
+.notice.success{color:#216448;background:#edf8f1;border:1px solid #cce9d7}
+.notice.info{color:#6d5133;background:#f6f0e7;border:1px solid #e9d9c6}
 
-    * { box-sizing: border-box; }
+/* LOGIN */
+.login-shell{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-brand{background:linear-gradient(135deg,#eee0cf,#f8f2e9 60%,#e8d5bf);display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,7vw,90px);position:relative;overflow:hidden}
+.login-brand:after{content:"";position:absolute;width:350px;height:350px;border:1px solid #a17f5b45;border-radius:50%;right:-130px;bottom:-140px;box-shadow:0 0 0 30px #a17f5b09,0 0 0 65px #a17f5b08}
+.brand-mark{color:var(--brown-dark);font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+.login-brand h1{font-size:clamp(35px,4vw,54px);letter-spacing:-1.8px;line-height:1.2;margin:25px 0}
+.login-brand h1 span{color:var(--brown-dark)}
+.login-brand>p{font-size:13px;color:#746351;max-width:420px}
+.login-pillars{display:grid;gap:11px;margin-top:28px;max-width:400px}
+.login-pillar{border:1px solid #a17f5b35;background:#ffffff50;padding:12px 15px;border-radius:11px;font-size:11px;color:var(--brown-dark);font-weight:600}
+.login-panel{display:flex;align-items:center;justify-content:center;padding:28px}
+.login-card{background:white;border:1px solid var(--border);border-radius:20px;padding:clamp(24px,4vw,40px);width:100%;max-width:430px;box-shadow:var(--shadow)}
+.login-logo{width:47px;height:47px;display:grid;place-items:center;border-radius:15px;background:var(--brown-dark);color:white;font-size:20px;margin-bottom:25px}
+.login-card h2{font-size:24px;letter-spacing:-.7px}
+.login-card .subtle{color:var(--muted);font-size:12px;margin-top:8px}
+.login-foot{color:var(--muted);font-size:10px;text-align:center;margin-top:24px}
 
-    body {
-      margin: 0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.55;
-    }
+/* SIDEBAR */
+.sidebar{width:252px;background:white;border-right:1px solid var(--border);padding:29px 18px;display:flex;flex-direction:column;flex-shrink:0;z-index:20;transition:transform .3s}
+.brand{display:flex;align-items:center;gap:12px;padding:0 10px;margin-bottom:42px}
+.brand-icon{width:43px;height:43px;border-radius:14px;background:var(--brown-dark);color:white;display:grid;place-items:center;font-size:18px;box-shadow:0 5px 15px #70523725}
+.brand-name{font-family:Manrope,sans-serif;font-size:14px;font-weight:800;letter-spacing:-.4px}
+.brand-sub{color:var(--muted);font-size:9px;margin-top:4px;letter-spacing:1.1px;text-transform:uppercase}
+.nav-group{margin-bottom:29px}
+.nav-label{font-size:10px;color:#aaa196;text-transform:uppercase;letter-spacing:1.6px;font-weight:700;padding:0 12px;margin-bottom:12px}
+.nav-link{width:100%;display:flex;align-items:center;gap:13px;padding:12px 13px;margin:4px 0;border:0;border-radius:11px;background:transparent;color:#827a70;text-align:left;font-size:12px;transition:.2s}
+.nav-link i{width:18px;font-size:14px;text-align:center}
+.nav-link:hover{background:#f8f4ef;color:var(--brown-dark);transform:translateX(2px)}
+.nav-link.active{background:#f1e7db;color:var(--brown-dark);font-weight:700}
+.sidebar-bottom{margin-top:auto}
+.mission-mini{padding:17px;border:1px solid var(--border);background:linear-gradient(145deg,#faf6ef,#fff);border-radius:15px;margin-bottom:18px}
+.mission-mini i{color:var(--brown);margin-bottom:10px;font-size:17px}
+.mission-mini p{font-family:Manrope,sans-serif;font-size:12px;font-weight:700;line-height:1.7}
+.mission-mini span{display:block;color:var(--muted);font-size:10px;line-height:1.6;margin-top:8px}
+.user-mini{display:flex;gap:10px;align-items:center;padding:12px 7px 0;border-top:1px solid var(--border)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--brown-light);color:var(--brown-dark);display:grid;place-items:center;font-weight:700;font-size:12px;flex-shrink:0}
+.user-name{font-size:11px;font-weight:700}.user-role{font-size:10px;color:var(--muted);margin-top:4px}
 
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { opacity: .6; cursor: wait; }
+/* MAIN */
+.main{flex:1;min-width:0}
+.topbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--border);background:#faf8f4ed;gap:20px}
+.breadcrumb{color:var(--muted);font-size:11px}.breadcrumb strong{color:var(--text)}
+.top-actions{display:flex;align-items:center;gap:11px}
+.search{display:flex;align-items:center;gap:10px;padding:10px 13px;width:220px;background:white;border:1px solid var(--border);border-radius:11px;color:var(--muted)}
+.search input{width:100%;min-width:0;border:0;outline:0;background:transparent;font-size:11px;padding:0}
+.icon-button{border:1px solid var(--border);background:white;width:39px;height:39px;border-radius:11px;color:var(--brown-dark)}
+.icon-button:hover{background:var(--surface)}
+.menu-toggle{display:none}
+.content{padding:36px 40px 45px;max-width:1600px;margin:auto}
+.page-view{display:none}.page-view.active{display:block;animation:appear .3s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.page-header{margin-bottom:27px}
+h1{font-size:clamp(27px,3vw,36px);letter-spacing:-1.5px;line-height:1.25;font-weight:800}
+.page-header h1{font-size:29px}
 
-    .hidden { display: none !important; }
+/* HERO */
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(115deg,#f0e5d7,#f8f2ea 53%,#eee1d1);padding:37px 38px;margin-bottom:25px;min-height:220px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.hero:before{content:"";position:absolute;width:290px;height:290px;border:1px solid #b58a6230;border-radius:50%;right:-50px;top:-100px;box-shadow:0 0 0 30px #b58a6208,0 0 0 60px #b58a6207}
+.hero-copy{position:relative;z-index:1;max-width:620px}
+.hero h1 span{color:var(--brown-dark)}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.hero-symbol{position:relative;z-index:1;flex-shrink:0;width:130px;height:130px;display:grid;place-items:center;color:#a17d58;border:1px solid #b58a6250;border-radius:50%;background:#ffffff30;font-size:44px}
 
-    .login-shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
-    }
+/* CARDS */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:36px}
+.stat-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.25s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.stat-label{color:var(--muted);font-size:10px;line-height:1.6}
+.stat-icon{width:34px;height:34px;flex-shrink:0;border-radius:11px;display:grid;place-items:center;background:var(--surface);color:var(--brown);font-size:12px}
+.stat-number{font-family:Manrope,sans-serif;font-size:27px;font-weight:800;letter-spacing:-1px;margin-top:16px}
+.stat-note{color:var(--muted);font-size:9px;line-height:1.6;margin-top:5px}
+.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:17px}
+.section-heading h2{font-size:19px;letter-spacing:-.6px}
+.section-heading p{color:var(--muted);font-size:11px;margin-top:6px}
+.pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:36px}
+.pillar-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:21px 19px;min-height:180px;transition:.25s}
+.pillar-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pillar-number{font-size:9px;color:#b5a18b;letter-spacing:1px;font-weight:700}
+.pillar-icon{display:grid;place-items:center;width:40px;height:40px;background:var(--surface);color:var(--brown);border-radius:13px;margin:16px 0 14px;font-size:15px}
+.pillar-card h3{font-size:12px;line-height:1.6}
+.pillar-card p{color:var(--muted);font-size:10px;line-height:1.8;margin-top:8px}
+.lower-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:19px}
+.panel{border:1px solid var(--border);background:white;border-radius:var(--radius);padding:23px;min-width:0}
+.panel-title{font-family:Manrope,sans-serif;font-size:14px;font-weight:800}
+.panel-subtitle{color:var(--muted);font-size:10px;line-height:1.8;margin-top:6px;margin-bottom:18px}
+.activity-list{display:grid;gap:17px}
+.activity-item{display:flex;align-items:flex-start;gap:11px}
+.activity-icon{width:34px;height:34px;border-radius:11px;background:var(--surface);color:var(--brown);display:grid;place-items:center;font-size:12px;flex-shrink:0}
+.activity-item strong{font-size:10px;display:block;line-height:1.6}
+.activity-item p{font-size:10px;color:var(--muted);margin-top:4px}
+.quote-card{margin-top:19px;background:#f6f0e7;border-radius:13px;padding:16px}
+.quote-card i{color:var(--brown);font-size:14px}
+.quote-card p{font-family:Manrope,sans-serif;font-size:11px;line-height:1.9;margin-top:8px;font-weight:600}
+.quote-card span{display:block;color:var(--muted);font-size:9px;margin-top:8px}
+.text-button{background:transparent;border:0;color:var(--brown-dark);font-size:10px;font-weight:700;padding:8px 0}
 
-    .brand-panel {
-      background: linear-gradient(145deg, var(--navy), #304d75);
-      color: white;
-      padding: clamp(32px, 7vw, 90px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .brand-mark {
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #e4c6b4;
-    }
-
-    .brand-panel h1 {
-      font-size: clamp(36px, 5vw, 60px);
-      line-height: 1.08;
-      margin: 24px 0;
-      letter-spacing: -1.7px;
-    }
-
-    .brand-panel p {
-      max-width: 430px;
-      color: #e0e7f1;
-      font-size: 17px;
-    }
-
-    .pillars {
-      display: grid;
-      gap: 12px;
-      margin-top: 30px;
-      max-width: 420px;
-    }
-
-    .pillar {
-      padding: 12px 15px;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 10px;
-      background: rgba(255,255,255,.06);
-    }
-
-    .login-panel {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 430px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: clamp(24px, 4vw, 38px);
-      box-shadow: var(--shadow);
-    }
-
-    .login-card h2 { margin: 0 0 7px; color: var(--navy); }
-    .subtle { color: var(--muted); font-size: 14px; }
-
-    label {
-      display: block;
-      margin: 17px 0 7px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    input {
-      display: block;
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid #cfd7e3;
-      border-radius: 9px;
-      outline: none;
-      background: white;
-      color: var(--text);
-    }
-
-    input:focus {
-      border-color: #5d7eac;
-      box-shadow: 0 0 0 3px rgba(93,126,172,.13);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 11px 16px;
-      border: 0;
-      border-radius: 9px;
-      background: var(--navy);
-      color: white;
-      font-weight: 700;
-      text-decoration: none;
-      transition: .15s ease;
-    }
-
-    .btn:hover { background: var(--navy2); }
-    .btn:disabled { opacity: .6; }
-
-    .btn-full { width: 100%; margin-top: 20px; }
-
-    .btn-secondary {
-      background: white;
-      color: var(--navy);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover { background: #f0f3f8; }
-
-    .text-button {
-      display: block;
-      margin: 16px auto 0;
-      border: 0;
-      padding: 5px;
-      color: var(--navy2);
-      background: transparent;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .notice {
-      padding: 12px 14px;
-      margin-top: 16px;
-      border-radius: 9px;
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .notice.error {
-      color: #8a2929;
-      background: #fff0f0;
-      border: 1px solid #f0caca;
-    }
-
-    .notice.success {
-      color: #216448;
-      background: #edf8f1;
-      border: 1px solid #cce9d7;
-    }
-
-    .notice.info {
-      color: #345276;
-      background: #edf3fb;
-      border: 1px solid #d5e2f3;
-    }
-
-    .app { min-height: 100vh; }
-
-    .topbar {
-      background: var(--navy);
-      color: white;
-      padding: 17px clamp(18px, 4vw, 48px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .topbar-title { font-weight: 800; letter-spacing: .3px; }
-    .topbar small { color: #d8e2ef; }
-
-    .topbar .btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.35);
-    }
-
-    .topbar .btn:hover { background: rgba(255,255,255,.1); }
-
-    .content {
-      max-width: 1320px;
-      margin: auto;
-      padding: 32px clamp(16px, 4vw, 42px) 60px;
-    }
-
-    .welcome {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-      align-items: end;
-      margin-bottom: 25px;
-    }
-
-    .welcome h1 {
-      margin: 0;
-      color: var(--navy);
-      font-size: clamp(27px, 4vw, 36px);
-      letter-spacing: -.8px;
-    }
-
-    .welcome p { margin: 7px 0 0; color: var(--muted); }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .stat, .panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      box-shadow: var(--shadow);
-    }
-
-    .stat { padding: 20px; }
-    .stat-label { color: var(--muted); font-size: 13px; }
-    .stat-value {
-      display: block;
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--navy);
-      margin-top: 5px;
-    }
-
-    .panel { padding: 23px; margin-bottom: 23px; }
-    .panel h2 { font-size: 19px; color: var(--navy); margin: 0 0 5px; }
-    .panel-description { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
-
-    .section-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .section-grid .panel { margin-bottom: 0; }
-
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .pillar-card {
-      padding: 17px;
-      background: #f8f9fc;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-    }
-
-    .pillar-number {
-      color: var(--red);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .pillar-card h3 { font-size: 15px; margin: 8px 0 5px; color: var(--navy); }
-    .pillar-card p { color: var(--muted); font-size: 12px; margin: 0; }
-
-    .table-wrap { overflow-x: auto; }
-
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-
-    th, td {
-      padding: 12px 10px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      color: var(--muted);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-
-    td { overflow-wrap: anywhere; }
-    tbody tr:last-child td { border-bottom: 0; }
-
-    .empty {
-      padding: 20px 10px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 20px;
-      background: #edf3fb;
-      color: #345276;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .footer {
-      padding: 22px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .loading { color: var(--muted); padding: 20px 0; font-size: 13px; }
-
-    @media (max-width: 850px) {
-      .login-shell { grid-template-columns: 1fr; }
-      .brand-panel { padding: 35px 28px; }
-      .brand-panel h1 { font-size: 38px; }
-      .pillars { display: none; }
-      .login-panel { padding: 22px 16px 35px; }
-      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 600px) {
-      .section-grid { grid-template-columns: 1fr; }
-      .content { padding-top: 22px; }
-      .panel { padding: 17px; }
-      .stat { padding: 15px; }
-      .stat-value { font-size: 27px; }
-    }
-  </style>
+/* DATA */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}
+.toolbar .search{width:300px}
+.data-panel{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px;min-width:0}
+.data-panel h2{font-size:15px;margin-bottom:7px}
+.data-panel>p{font-size:11px;color:var(--muted);margin-bottom:17px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{padding:12px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
+th{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.5px}
+tbody tr:last-child td{border-bottom:0}
+.empty-state{text-align:center;padding:36px 20px;border:1px dashed #d9cfc1;border-radius:var(--radius);background:#fffdf9}
+.empty-icon{width:48px;height:48px;margin:0 auto 15px;display:grid;place-items:center;border-radius:15px;background:var(--surface);color:var(--brown);font-size:18px}
+.empty-state h3{font-size:14px}
+.empty-state p{max-width:450px;margin:10px auto 17px;color:var(--muted);font-size:11px;line-height:1.9}
+.status{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:5px 9px;font-size:9px;font-weight:700;background:var(--green-bg);color:var(--green)}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.feature-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.feature-card .pillar-icon{margin-top:0}
+.feature-card h3{font-size:14px;margin-bottom:9px}
+.feature-card p{color:var(--muted);font-size:11px}
+.step-list{list-style:none;margin-top:14px}
+.step-list li{padding:10px 0;border-top:1px solid var(--border);color:#6f675e;font-size:10px;line-height:1.7}
+.step-list li i{color:var(--brown);margin-right:8px}
+.settings-row{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:17px 0;border-bottom:1px solid var(--border)}
+.settings-row:last-child{border-bottom:0}
+.settings-row strong{font-size:11px}
+.settings-row p{color:var(--muted);font-size:10px;margin-top:5px}
+.status-demo{background:var(--green-bg);color:var(--green)}
+.status-pending{background:#f7efe4;color:#a17a4e}
+.status-neutral{background:#f0efec;color:#77736c}
+.footer{border-top:1px solid var(--border);margin-top:35px;padding-top:19px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:9px}
+.footer strong{color:var(--brown-dark)}
+.toast{position:fixed;bottom:24px;right:24px;max-width:min(380px,calc(100vw - 40px));background:#302c27;color:white;padding:14px 17px;border-radius:12px;font-size:11px;line-height:1.8;box-shadow:0 10px 35px #0002;z-index:100;opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translateY(0)}
+.loading{padding:20px;color:var(--muted);font-size:11px}
+@media(max-width:1150px){.sidebar{width:225px}.topbar{padding:0 27px}.content{padding:29px 27px 40px}.stats,.pillars{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-symbol{width:100px;height:100px;font-size:34px}}
+@media(max-width:800px){.login-shell{grid-template-columns:1fr}.login-brand{padding:35px 28px}.login-brand h1{font-size:37px}.login-pillars{display:none}.login-panel{padding:22px 16px 35px}.sidebar{position:fixed;inset:0 auto 0 0;width:270px;transform:translateX(-100%);box-shadow:none;overflow-y:auto}.sidebar.open{transform:translateX(0);box-shadow:15px 0 50px #0002}.menu-toggle{display:inline-grid;place-items:center}.topbar{min-height:70px;padding:0 19px}.content{padding:24px 19px 35px}.lower-grid{grid-template-columns:1fr}.search{width:180px}.hero{padding:28px}}
+@media(max-width:520px){.topbar{padding:0 12px;gap:9px}.top-actions{gap:6px}.topbar .search{width:135px;padding:9px}.topbar .icon-button{width:35px;height:35px}.content{padding:19px 13px 30px}.hero{padding:24px 20px;min-height:auto}.hero-symbol{display:none}.hero h1{font-size:26px}.stats{gap:9px}.stat-card{padding:13px}.stat-number{font-size:24px}.stat-label{font-size:9px}.stat-icon{width:29px;height:29px}.pillars{gap:9px}.pillar-card{padding:16px 13px;min-height:170px}.pillar-card h3{font-size:11px}.section-heading h2{font-size:16px}.data-panel,.panel{padding:17px}.feature-grid{grid-template-columns:1fr}.toolbar .search{width:100%}.toolbar{align-items:stretch}.page-header h1{font-size:25px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
 </head>
 
 <body>
-  <!-- LOGIN -->
-  <section id="loginScreen" class="login-shell">
-    <div class="brand-panel">
-      <div class="brand-mark">Ministerio juvenil</div>
-      <h1>Conocer a Dios.<br>Crecer en carácter.<br>Vivir con propósito.</h1>
-      <p>
-        Un espacio para acompañar a cada joven en su crecimiento espiritual,
-        personal y práctico.
-      </p>
-      <div class="pillars">
-        <div class="pillar">01 · Conocer a Dios</div>
-        <div class="pillar">02 · Desarrollar una relación personal con Dios</div>
-        <div class="pillar">03 · Crecer como persona</div>
-        <div class="pillar">04 · Vivir la fe</div>
-      </div>
+
+<!-- LOGIN AND PASSWORD RECOVERY -->
+<section id="loginScreen" class="login-shell">
+  <div class="login-brand">
+    <div class="brand-mark"><i class="fa-solid fa-seedling"></i> Ministerio Juvenil</div>
+    <h1>Guiar con amor.<br><span>Desarrollar con propósito.</span></h1>
+    <p>Un espacio para acompañar a cada joven en su crecimiento espiritual, personal y práctico, reconociendo que cada historia es única.</p>
+    <div class="login-pillars">
+      <div class="login-pillar">01 · Conocer a Dios</div>
+      <div class="login-pillar">02 · Desarrollar una relación personal con Dios</div>
+      <div class="login-pillar">03 · Crecer como persona</div>
+      <div class="login-pillar">04 · Vivir la fe</div>
     </div>
+  </div>
 
-    <div class="login-panel">
-      <div class="login-card">
-        <div id="loginView">
-          <h2>Bienvenido</h2>
-          <p class="subtle">Inicia sesión para acceder al panel del ministerio.</p>
+  <div class="login-panel">
+    <div class="login-card">
+      <div class="login-logo"><i class="fa-solid fa-seedling"></i></div>
 
-          <form id="loginForm">
-            <label for="loginEmail">Correo electrónico</label>
-            <input id="loginEmail" type="email" autocomplete="username"
-              placeholder="tu@correo.com" required>
-
-            <label for="loginPassword">Contraseña</label>
-            <input id="loginPassword" type="password"
-              autocomplete="current-password" placeholder="Tu contraseña" required>
-
-            <button id="loginButton" class="btn btn-full" type="submit">
-              Iniciar sesión
-            </button>
-          </form>
-
-          <button id="forgotButton" class="text-button" type="button">
-            ¿Olvidaste tu contraseña?
-          </button>
-        </div>
-
-        <div id="forgotView" class="hidden">
-          <h2>Recuperar contraseña</h2>
-          <p class="subtle">
-            Te enviaremos un enlace para crear una contraseña nueva.
-          </p>
-
-          <form id="forgotForm">
-            <label for="recoveryEmail">Correo electrónico de tu cuenta</label>
-            <input id="recoveryEmail" type="email" autocomplete="email"
-              placeholder="tu@correo.com" required>
-            <button id="recoveryButton" class="btn btn-full" type="submit">
-              Enviar enlace de recuperación
-            </button>
-          </form>
-
-          <button id="backToLogin" class="text-button" type="button">
-            Volver al inicio de sesión
-          </button>
-        </div>
-
-        <div id="resetView" class="hidden">
-          <h2>Nueva contraseña</h2>
-          <p class="subtle">
-            Elige una contraseña nueva para tu cuenta.
-          </p>
-
-          <form id="resetForm">
-            <label for="newPassword">Nueva contraseña</label>
-            <input id="newPassword" type="password" autocomplete="new-password"
-              minlength="8" placeholder="Mínimo 8 caracteres" required>
-
-            <label for="confirmPassword">Confirmar contraseña</label>
-            <input id="confirmPassword" type="password" autocomplete="new-password"
-              minlength="8" placeholder="Escribe la misma contraseña" required>
-
-            <button id="savePasswordButton" class="btn btn-full" type="submit">
-              Guardar nueva contraseña
-            </button>
-          </form>
-        </div>
-
-        <div id="loginMessage" class="notice hidden" role="status"
-          aria-live="polite"></div>
+      <div id="loginView">
+        <h2>Bienvenido</h2>
+        <p class="subtle">Inicia sesión para acceder al panel del ministerio.</p>
+        <form id="loginForm">
+          <label class="field-label" for="loginEmail">Correo electrónico</label>
+          <input id="loginEmail" type="email" autocomplete="username" placeholder="tu@correo.com" required>
+          <label class="field-label" for="loginPassword">Contraseña</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
+          <button id="loginButton" class="btn btn-primary btn-full" type="submit">Iniciar sesión</button>
+        </form>
+        <button id="forgotButton" class="text-button" type="button">¿Olvidaste tu contraseña?</button>
       </div>
-    </div>
-  </section>
 
-  <!-- DASHBOARD -->
-  <section id="dashboardScreen" class="app hidden">
-    <header class="topbar">
+      <div id="forgotView" class="hidden">
+        <h2>Recuperar contraseña</h2>
+        <p class="subtle">Te enviaremos un enlace para crear una contraseña nueva.</p>
+        <form id="forgotForm">
+          <label class="field-label" for="recoveryEmail">Correo electrónico</label>
+          <input id="recoveryEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required>
+          <button id="recoveryButton" class="btn btn-primary btn-full" type="submit">Enviar enlace</button>
+        </form>
+        <button id="backToLogin" class="text-button" type="button">Volver al inicio de sesión</button>
+      </div>
+
+      <div id="resetView" class="hidden">
+        <h2>Nueva contraseña</h2>
+        <p class="subtle">Elige una contraseña nueva para tu cuenta.</p>
+        <form id="resetForm">
+          <label class="field-label" for="newPassword">Nueva contraseña</label>
+          <input id="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo 8 caracteres" required>
+          <label class="field-label" for="confirmPassword">Confirmar contraseña</label>
+          <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Repite tu contraseña" required>
+          <button id="savePasswordButton" class="btn btn-primary btn-full" type="submit">Guardar nueva contraseña</button>
+        </form>
+      </div>
+
+      <div id="loginMessage" class="notice hidden" role="status" aria-live="polite"></div>
+      <div class="login-foot">Conocer a Dios · Crecer en carácter · Vivir con propósito</div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHENTICATED DASHBOARD -->
+<div id="dashboardScreen" class="app hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-seedling"></i></div>
       <div>
-        <div class="topbar-title">MINISTERIO JUVENIL</div>
-        <small>Conocer · Crecer · Vivir</small>
+        <div class="brand-name">Ministerio Juvenil</div>
+        <div class="brand-sub">Desarrollo & Discipulado</div>
       </div>
-      <button id="logoutButton" class="btn" type="button">Cerrar sesión</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Principal</div>
+      <button class="nav-link active" data-page="inicio"><i class="fa-solid fa-house"></i> Inicio</button>
+      <button class="nav-link" data-page="jovenes"><i class="fa-solid fa-users"></i> Jóvenes</button>
+      <button class="nav-link" data-page="encuentros"><i class="fa-regular fa-comments"></i> Encuentros personales</button>
+      <button class="nav-link" data-page="desarrollo"><i class="fa-solid fa-chart-line"></i> Desarrollo individual</button>
+      <button class="nav-link" data-page="seguimientos"><i class="fa-regular fa-calendar-check"></i> Seguimientos</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Fundamento</div>
+      <button class="nav-link" data-page="pilares"><i class="fa-solid fa-compass"></i> Los cuatro pilares</button>
+      <button class="nav-link" data-page="configuracion"><i class="fa-solid fa-sliders"></i> Configuración</button>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="mission-mini">
+        <i class="fa-solid fa-heart"></i>
+        <p>Conocer a Dios. Crecer en carácter. Vivir con propósito.</p>
+        <span>El crecimiento comienza con una relación.</span>
+      </div>
+      <div class="user-mini">
+        <div class="avatar" id="userAvatar">MJ</div>
+        <div>
+          <div class="user-name" id="userName">Ministerio Juvenil</div>
+          <div class="user-role" id="userRole">Usuario autorizado</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:13px">
+        <button class="icon-button menu-toggle" id="menuToggle" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb">Ministerio / <strong id="breadcrumbTitle">Inicio</strong></div>
+      </div>
+      <div class="top-actions">
+        <label class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="globalSearch" type="search" placeholder="Buscar sección..." aria-label="Buscar sección">
+        </label>
+        <button class="icon-button" id="helpButton" aria-label="Información"><i class="fa-regular fa-circle-question"></i></button>
+        <button class="icon-button" id="logoutButton" aria-label="Cerrar sesión" title="Cerrar sesión"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+      </div>
     </header>
 
-    <main class="content">
-      <div class="welcome">
-        <div>
-          <h1>Panel de acompañamiento</h1>
-          <p id="welcomeText">Bienvenido al panel del ministerio.</p>
-        </div>
-        <span class="status">Acceso autorizado</span>
-      </div>
+    <div class="content">
+      <div id="dashboardMessage" class="notice hidden" role="status" aria-live="polite" style="margin-bottom:20px"></div>
 
-      <div id="dashboardMessage" class="notice hidden" role="status"
-        aria-live="polite"></div>
+      <!-- INICIO -->
+      <section class="page-view active" id="page-inicio">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><i class="fa-solid fa-circle"></i> PANEL DE DESARROLLO</div>
+            <h1>Guiar con amor.<br><span>Desarrollar con propósito.</span></h1>
+            <p class="intro">Un espacio para acompañar a cada joven en su crecimiento espiritual, personal y práctico, reconociendo que cada historia es única.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-go="jovenes"><i class="fa-solid fa-users"></i> Explorar jóvenes</button>
+              <button class="btn btn-secondary" data-go="pilares"><i class="fa-solid fa-compass"></i> Ver los pilares</button>
+            </div>
+          </div>
+          <div class="hero-symbol"><i class="fa-solid fa-seedling"></i></div>
+        </div>
 
-      <div class="stats">
-        <div class="stat">
-          <span class="stat-label">Jóvenes registrados</span>
-          <strong id="studentCount" class="stat-value">—</strong>
+        <div class="stats">
+          <div class="stat-card"><div class="stat-top"><span class="stat-label">Jóvenes registrados</span><span class="stat-icon"><i class="fa-solid fa-users"></i></span></div><div class="stat-number" id="studentCount">—</div><div class="stat-note">Perfiles disponibles para tu cuenta</div></div>
+          <div class="stat-card"><div class="stat-top"><span class="stat-label">Encuentros realizados</span><span class="stat-icon"><i class="fa-regular fa-comments"></i></span></div><div class="stat-number" id="meetingCount">—</div><div class="stat-note">Conversaciones registradas</div></div>
+          <div class="stat-card"><div class="stat-top"><span class="stat-label">Metas de desarrollo</span><span class="stat-icon"><i class="fa-solid fa-bullseye"></i></span></div><div class="stat-number" id="goalCount">—</div><div class="stat-note">Objetivos individuales</div></div>
+          <div class="stat-card"><div class="stat-top"><span class="stat-label">Seguimientos pendientes</span><span class="stat-icon"><i class="fa-regular fa-calendar-check"></i></span></div><div class="stat-number" id="followupCount">—</div><div class="stat-note">Próximos pasos de acompañamiento</div></div>
         </div>
-        <div class="stat">
-          <span class="stat-label">Encuentros personales</span>
-          <strong id="meetingCount" class="stat-value">—</strong>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Metas de desarrollo</span>
-          <strong id="goalCount" class="stat-value">—</strong>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Seguimientos pendientes</span>
-          <strong id="followupCount" class="stat-value">—</strong>
-        </div>
-      </div>
 
-      <section class="panel">
-        <h2>Los cuatro pilares</h2>
-        <p class="panel-description">
-          El fundamento del acompañamiento y desarrollo de cada joven.
-        </p>
-        <div class="pillars-grid">
-          <div class="pillar-card">
-            <span class="pillar-number">PILAR 01</span>
-            <h3>Conocer a Dios</h3>
-            <p>Conocimiento bíblico y comprensión del carácter de Dios.</p>
+        <div class="section-heading">
+          <div><h2>Los cuatro pilares</h2><p>La base que guía cada conversación y cada plan de desarrollo.</p></div>
+          <button class="text-button" data-go="pilares">Conocer más <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+        <div class="pillars">
+          <article class="pillar-card"><div class="pillar-number">PILAR 01</div><div class="pillar-icon"><i class="fa-solid fa-book-bible"></i></div><h3>Conocer a Dios</h3><p>Comprender quién es Dios y crecer en el conocimiento de Su Palabra.</p></article>
+          <article class="pillar-card"><div class="pillar-number">PILAR 02</div><div class="pillar-icon"><i class="fa-solid fa-hands-praying"></i></div><h3>Desarrollar una Relación Personal con Dios</h3><p>Cultivar una fe personal mediante la oración, la Palabra y la comunión.</p></article>
+          <article class="pillar-card"><div class="pillar-number">PILAR 03</div><div class="pillar-icon"><i class="fa-solid fa-seedling"></i></div><h3>Crecer como Persona</h3><p>Fortalecer el carácter, las habilidades, la responsabilidad y la madurez.</p></article>
+          <article class="pillar-card"><div class="pillar-number">PILAR 04</div><div class="pillar-icon"><i class="fa-solid fa-heart"></i></div><h3>Vivir la Fe</h3><p>Poner las convicciones en práctica mediante el servicio y el amor al prójimo.</p></article>
+        </div>
+
+        <div class="lower-grid">
+          <div class="panel">
+            <div class="panel-title">Espacio de acompañamiento</div>
+            <p class="panel-subtitle">Un resumen de los jóvenes disponibles para tu cuenta.</p>
+            <div id="homeStudents" class="loading">Cargando perfiles…</div>
           </div>
-          <div class="pillar-card">
-            <span class="pillar-number">PILAR 02</span>
-            <h3>Relación personal con Dios</h3>
-            <p>Oración, reflexión y desarrollo de una relación personal.</p>
-          </div>
-          <div class="pillar-card">
-            <span class="pillar-number">PILAR 03</span>
-            <h3>Crecer como persona</h3>
-            <p>Carácter, responsabilidad, habilidades y madurez.</p>
-          </div>
-          <div class="pillar-card">
-            <span class="pillar-number">PILAR 04</span>
-            <h3>Vivir la fe</h3>
-            <p>Servicio, amor al prójimo y fe puesta en práctica.</p>
+          <div class="panel">
+            <div class="panel-title">Nuestra filosofía</div>
+            <p class="panel-subtitle">Cómo queremos acompañar a cada joven.</p>
+            <div class="activity-list">
+              <div class="activity-item"><div class="activity-icon"><i class="fa-regular fa-heart"></i></div><div><strong>Escuchar antes de asumir</strong><p>Dar espacio a cada joven para compartir su propia perspectiva.</p></div></div>
+              <div class="activity-item"><div class="activity-icon"><i class="fa-solid fa-seedling"></i></div><div><strong>Guiar, no comparar</strong><p>Reconocer que el crecimiento tiene ritmos y circunstancias diferentes.</p></div></div>
+              <div class="activity-item"><div class="activity-icon"><i class="fa-solid fa-hand-holding-heart"></i></div><div><strong>Convertir la fe en acción</strong><p>Practicar el amor, el servicio, la responsabilidad y la compasión.</p></div></div>
+            </div>
+            <div class="quote-card"><i class="fa-solid fa-quote-left"></i><p>“Ninguno tenga en poco tu juventud, sino sé ejemplo de los creyentes.”</p><span>1 Timoteo 4:12</span></div>
           </div>
         </div>
       </section>
 
-      <div class="section-grid">
-        <section class="panel">
-          <h2>Jóvenes</h2>
-          <p class="panel-description">
-            Perfiles y áreas de desarrollo autorizadas para tu cuenta.
-          </p>
-          <div id="studentsTable" class="loading">Cargando jóvenes…</div>
-        </section>
-
-        <section class="panel">
-          <h2>Encuentros personales</h2>
-          <p class="panel-description">
-            Historial de conversaciones al que tienes acceso.
-          </p>
-          <div id="meetingsTable" class="loading">Cargando encuentros…</div>
-        </section>
-
-        <section class="panel">
-          <h2>Metas de desarrollo</h2>
-          <p class="panel-description">
-            Objetivos y próximos pasos.
-          </p>
-          <div id="goalsTable" class="loading">Cargando metas…</div>
-        </section>
-
-        <section class="panel">
-          <h2>Seguimientos</h2>
-          <p class="panel-description">
-            Recordatorios y tareas de acompañamiento.
-          </p>
-          <div id="followupsTable" class="loading">Cargando seguimientos…</div>
-        </section>
-      </div>
-
-      <section class="panel">
-        <h2>Próximamente</h2>
-        <p class="panel-description">
-          Las funciones para agregar y editar registros se habilitarán después
-          de verificar los permisos de seguridad.
-        </p>
-        <button class="btn btn-secondary" type="button" disabled>
-          Registrar un joven
-        </button>
-        <button class="btn btn-secondary" type="button" disabled>
-          Registrar un encuentro
-        </button>
-        <button class="btn btn-secondary" type="button" disabled>
-          Crear una meta
-        </button>
+      <!-- JÓVENES -->
+      <section class="page-view" id="page-jovenes">
+        <div class="page-header"><div class="eyebrow">ACOMPAÑAMIENTO INDIVIDUAL</div><h1>Jóvenes</h1><p class="intro">Conoce a cada joven como persona: sus intereses, fortalezas, aspiraciones y áreas en las que desea crecer.</p></div>
+        <div class="toolbar"><label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="studentSearch" type="search" placeholder="Buscar joven..." aria-label="Buscar joven"></label><span class="status">Solo lectura mientras verificamos permisos</span></div>
+        <div class="data-panel"><h2>Perfiles individuales</h2><p>Los perfiles visibles según tus permisos de acceso.</p><div id="studentsTable" class="loading">Cargando jóvenes…</div></div>
       </section>
 
-      <div class="footer">
-        Ministerio juvenil · Acompañar con sabiduría, servir con amor.
-      </div>
-    </main>
-  </section>
+      <!-- ENCUENTROS -->
+      <section class="page-view" id="page-encuentros">
+        <div class="page-header"><div class="eyebrow">ESCUCHA Y DISCIPULADO</div><h1>Encuentros personales</h1><p class="intro">Un espacio para registrar conversaciones individuales con cuidado, respeto y confidencialidad.</p></div>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-regular fa-comments"></i></div><h3>Escuchar y acompañar</h3><p>Documenta las conversaciones con cuidado, diferenciando lo que el joven compartió de las observaciones del responsable.</p><ul class="step-list"><li><i class="fa-regular fa-calendar"></i> Fecha y responsable del encuentro</li><li><i class="fa-regular fa-comment-dots"></i> Lo que el joven compartió voluntariamente</li><li><i class="fa-solid fa-list-check"></i> Próximos pasos acordados</li></ul></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-shield-heart"></i></div><h3>Confidencialidad y cuidado</h3><p>Los registros deben protegerse y ser accesibles únicamente a las personas autorizadas.</p><ul class="step-list"><li><i class="fa-solid fa-lock"></i> Acceso restringido por usuario</li><li><i class="fa-solid fa-user-shield"></i> Acceso conforme a los permisos de Supabase</li><li><i class="fa-solid fa-heart"></i> Escuchar sin juzgar ni etiquetar</li></ul></div>
+        </div>
+        <div class="data-panel" style="margin-top:20px"><h2>Historial de encuentros</h2><p>Conversaciones accesibles para tu cuenta.</p><div id="meetingsTable" class="loading">Cargando encuentros…</div></div>
+      </section>
 
-  <script>
-    // Public client configuration. Never put a service_role or secret key here.
-    const SUPABASE_URL = "https://orlnuaabtqhxosonyhjv.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_CoWVtNZP9HYGdQLVuTXO_Q_UyodoGjx";
+      <!-- DESARROLLO -->
+      <section class="page-view" id="page-desarrollo">
+        <div class="page-header"><div class="eyebrow">CRECIMIENTO CON PROPÓSITO</div><h1>Desarrollo individual</h1><p class="intro">Planes de crecimiento personales, realistas y revisables, creados con cada joven en lugar de imponer expectativas.</p></div>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-bullseye"></i></div><h3>Metas personales</h3><p>Cada meta debe ser comprensible, alcanzable y elegida o acordada con el joven.</p><ul class="step-list"><li><i class="fa-solid fa-check"></i> Definir una meta concreta</li><li><i class="fa-solid fa-check"></i> Acordar acciones pequeñas y medibles</li><li><i class="fa-solid fa-check"></i> Revisar avances sin avergonzar</li></ul></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-compass"></i></div><h3>Perfil de desarrollo</h3><p>Identifica intereses, talentos, habilidades que desea desarrollar y oportunidades de servicio.</p><ul class="step-list"><li><i class="fa-solid fa-check"></i> Intereses y fortalezas</li><li><i class="fa-solid fa-check"></i> Habilidades por practicar</li><li><i class="fa-solid fa-check"></i> Oportunidades de servicio y liderazgo</li></ul></div>
+        </div>
+        <div class="data-panel" style="margin-top:20px"><h2>Metas individuales</h2><p>Metas, estado y fechas objetivo.</p><div id="goalsTable" class="loading">Cargando metas…</div></div>
+      </section>
 
-    const sbClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+      <!-- SEGUIMIENTOS -->
+      <section class="page-view" id="page-seguimientos">
+        <div class="page-header"><div class="eyebrow">CONSTANCIA Y RESPONSABILIDAD</div><h1>Seguimientos</h1><p class="intro">Recordatorios y próximos pasos para que las conversaciones se traduzcan en acompañamiento constante.</p></div>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-regular fa-calendar-check"></i></div><h3>Próximos compromisos</h3><p>Organiza fechas de revisión, acciones acordadas y oportunidades de conversar nuevamente.</p></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-handshake-angle"></i></div><h3>Responsables claros</h3><p>Asigna cada seguimiento a una persona autorizada, con una fecha y una acción concreta.</p></div>
+        </div>
+        <div class="data-panel" style="margin-top:20px"><h2>Lista de seguimientos</h2><p>Estado de las acciones de acompañamiento.</p><div id="followupsTable" class="loading">Cargando seguimientos…</div></div>
+      </section>
 
-    const $ = (id) => document.getElementById(id);
+      <!-- PILARES -->
+      <section class="page-view" id="page-pilares">
+        <div class="page-header"><div class="eyebrow">NUESTRA FUNDACIÓN</div><h1>Los cuatro pilares</h1><p class="intro">El marco de desarrollo del ministerio: crecer en conocimiento, relación con Dios, carácter y servicio.</p></div>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-book-bible"></i></div><h3>01 · Conocer a Dios</h3><p>Explorar las Escrituras, comprender el carácter de Dios y aprender los fundamentos de la fe cristiana.</p><ul class="step-list"><li><i class="fa-solid fa-book-open"></i> Lectura y comprensión bíblica</li><li><i class="fa-solid fa-lightbulb"></i> Preguntas y aprendizaje</li><li><i class="fa-regular fa-comments"></i> Conversaciones sobre la fe</li></ul></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-hands-praying"></i></div><h3>02 · Desarrollar una Relación Personal con Dios</h3><p>Ayudar a cada joven a cultivar una relación sincera con Dios mediante prácticas espirituales personales.</p><ul class="step-list"><li><i class="fa-solid fa-heart"></i> Oración personal y reflexión</li><li><i class="fa-solid fa-book-open"></i> Lectura y aprendizaje</li><li><i class="fa-solid fa-seedling"></i> Honestidad y confianza</li></ul></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-seedling"></i></div><h3>03 · Crecer como Persona</h3><p>Fomentar carácter, inteligencia emocional, hábitos saludables, responsabilidad y habilidades prácticas.</p><ul class="step-list"><li><i class="fa-solid fa-brain"></i> Autoconocimiento</li><li><i class="fa-solid fa-people-group"></i> Relaciones y comunicación</li><li><i class="fa-solid fa-list-check"></i> Metas y responsabilidad</li></ul></div>
+          <div class="feature-card"><div class="pillar-icon"><i class="fa-solid fa-heart"></i></div><h3>04 · Vivir la Fe</h3><p>Poner en práctica lo aprendido mediante el amor al prójimo, la generosidad, el servicio y el ejemplo personal.</p><ul class="step-list"><li><i class="fa-solid fa-hand-holding-heart"></i> Servicio a la comunidad</li><li><i class="fa-solid fa-people-carry-box"></i> Trabajo en equipo</li><li><i class="fa-solid fa-person-circle-check"></i> Liderazgo con el ejemplo</li></ul></div>
+        </div>
+      </section>
 
-    let recoveryMode = false;
-    let currentUserId = null;
-    let dashboardRequest = 0;
+      <!-- CONFIGURACIÓN -->
+      <section class="page-view" id="page-configuracion">
+        <div class="page-header"><div class="eyebrow">PREFERENCIAS DEL SISTEMA</div><h1>Configuración</h1><p class="intro">Información general y estado de la plataforma.</p></div>
+        <div class="data-panel">
+          <div class="settings-row"><div><strong>Base de datos</strong><p>Conexión con Supabase.</p></div><span class="status status-demo">Conectada</span></div>
+          <div class="settings-row"><div><strong>Autenticación</strong><p>Inicio de sesión y recuperación de contraseña.</p></div><span class="status status-demo">Activa</span></div>
+          <div class="settings-row"><div><strong>Permisos</strong><p>El acceso a los registros depende de las políticas RLS de Supabase.</p></div><span class="status status-pending">Requiere pruebas</span></div>
+          <div class="settings-row"><div><strong>Edición de registros</strong><p>Las funciones de creación y edición no están habilitadas en esta versión.</p></div><span class="status status-neutral">Solo lectura</span></div>
+        </div>
+        <div class="quote-card"><i class="fa-solid fa-shield-heart"></i><p>La información de los jóvenes debe mantenerse privada. Verifica los permisos con cuentas de prueba antes de usar datos reales.</p></div>
+      </section>
 
-    function showMessage(message, type = "info", target = "loginMessage") {
-      const el = $(target);
-      el.textContent = message;
-      el.className = "notice " + type;
-    }
+      <footer class="footer"><span><strong>Ministerio Juvenil</strong> · Desarrollo y discipulado</span><span>Una herramienta para acompañar, servir y crecer.</span></footer>
+    </div>
+  </main>
+</div>
 
-    function clearMessage(target = "loginMessage") {
-      const el = $(target);
-      el.textContent = "";
-      el.className = "notice hidden";
-    }
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    function showLoginView(view) {
-      $("loginView").classList.toggle("hidden", view !== "login");
-      $("forgotView").classList.toggle("hidden", view !== "forgot");
-      $("resetView").classList.toggle("hidden", view !== "reset");
-      clearMessage();
-    }
+<script>
+"use strict";
 
-    function showLoginScreen(view = "login") {
-      $("dashboardScreen").classList.add("hidden");
-      $("loginScreen").classList.remove("hidden");
-      showLoginView(view);
-    }
+const SUPABASE_URL = "https://orlnuaabtqhxosonyhjv.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_CoWVtNZP9HYGdQLVuTXO_Q_UyodoGjx";
+const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-    function setBusy(buttonId, busy, busyText) {
-      const button = $(buttonId);
-      if (busy) {
-        button.dataset.originalText = button.textContent;
-        button.textContent = busyText;
-        button.disabled = true;
-      } else {
-        button.textContent = button.dataset.originalText || button.textContent;
-        button.disabled = false;
-      }
-    }
+const $ = id => document.getElementById(id);
+let recoveryMode = false;
+let dashboardRequest = 0;
+let toastTimer;
+let allStudents = [];
 
-    function friendlyError(error) {
-      const message = String(error?.message || "").toLowerCase();
+const pageNames = {
+  inicio:"Inicio", jovenes:"Jóvenes", encuentros:"Encuentros personales",
+  desarrollo:"Desarrollo individual", seguimientos:"Seguimientos",
+  pilares:"Los cuatro pilares", configuracion:"Configuración"
+};
 
-      if (message.includes("invalid login credentials")) {
-        return "Correo o contraseña incorrectos. Si no recuerdas la contraseña, usa «¿Olvidaste tu contraseña?»";
-      }
-      if (message.includes("email not confirmed")) {
-        return "El correo de esta cuenta no está confirmado. Revisa la configuración de la cuenta en Supabase.";
-      }
-      if (message.includes("rate limit")) {
-        return "Se hicieron demasiados intentos. Espera un poco e inténtalo de nuevo.";
-      }
-      if (message.includes("network") || message.includes("fetch")) {
-        return "No pudimos conectar con Supabase. Comprueba tu conexión e inténtalo de nuevo.";
-      }
+function showLoginView(view) {
+  ["login","forgot","reset"].forEach(name => {
+    $(name + "View").classList.toggle("hidden", name !== view);
+  });
+  clearLoginMessage();
+}
+function showLoginScreen(view="login") {
+  $("dashboardScreen").classList.add("hidden");
+  $("loginScreen").classList.remove("hidden");
+  showLoginView(view);
+}
+function showLoginMessage(message,type="info") {
+  $("loginMessage").textContent = message;
+  $("loginMessage").className = "notice " + type;
+}
+function clearLoginMessage() {
+  $("loginMessage").textContent = "";
+  $("loginMessage").className = "notice hidden";
+}
+function showDashboardMessage(message,type="info") {
+  $("dashboardMessage").textContent = message;
+  $("dashboardMessage").className = "notice " + type;
+}
+function clearDashboardMessage() {
+  $("dashboardMessage").textContent = "";
+  $("dashboardMessage").className = "notice hidden";
+}
+function busy(id,on,text) {
+  const button = $(id);
+  if (on) {
+    button.dataset.originalText = button.textContent;
+    button.textContent = text;
+    button.disabled = true;
+  } else {
+    button.textContent = button.dataset.originalText || button.textContent;
+    button.disabled = false;
+  }
+}
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+function dateText(value) {
+  if (!value) return "—";
+  const date = new Date(value + (/^\d{4}-\d{2}-\d{2}$/.test(value) ? "T12:00:00" : ""));
+  return Number.isNaN(date.getTime()) ? safe(value) :
+    date.toLocaleDateString("es-MX",{year:"numeric",month:"short",day:"numeric"});
+}
+function friendlyError(error) {
+  const m = String(error?.message || "").toLowerCase();
+  if (m.includes("invalid login credentials")) return "Correo o contraseña incorrectos. Usa «¿Olvidaste tu contraseña?» si necesitas crear una nueva.";
+  if (m.includes("email not confirmed")) return "El correo aún no está confirmado. Revisa el estado de la cuenta en Supabase Authentication.";
+  if (m.includes("rate limit")) return "Se hicieron demasiados intentos. Espera un poco antes de volver a intentarlo.";
+  if (m.includes("network") || m.includes("fetch")) return "No pudimos conectar con Supabase. Revisa tu conexión e inténtalo otra vez.";
+  return error?.message || "Ocurrió un error inesperado.";
+}
+function showToast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.remove("show"), 3800);
+}
 
-      return "No se pudo completar la operación. Detalle: " +
-        (error?.message || "error desconocido");
-    }
+function navigate(page) {
+  if (!pageNames[page]) return;
+  document.querySelectorAll(".page-view").forEach(el => el.classList.remove("active"));
+  $("page-" + page).classList.add("active");
+  document.querySelectorAll(".nav-link").forEach(el =>
+    el.classList.toggle("active", el.dataset.page === page)
+  );
+  $("breadcrumbTitle").textContent = pageNames[page];
+  $("sidebar").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav-link").forEach(el => el.addEventListener("click",()=>navigate(el.dataset.page)));
+document.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click",()=>navigate(el.dataset.go)));
+$("menuToggle").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+$("helpButton").addEventListener("click",()=>showToast("Los datos se muestran según los permisos de tu cuenta. Los formularios de edición aún no están habilitados."));
+$("globalSearch").addEventListener("keydown",event=>{
+  if(event.key!=="Enter")return;
+  const query=event.target.value.trim().toLocaleLowerCase("es");
+  const match=Object.entries(pageNames).find(([,name])=>name.toLocaleLowerCase("es").includes(query));
+  if(match){navigate(match[0]);event.target.value="";}
+  else if(query)showToast("No encontré esa sección. Prueba jóvenes, encuentros, desarrollo o pilares.");
+});
 
-    function setDashboardMessage(message, type = "info") {
-      showMessage(message, type, "dashboardMessage");
-    }
-
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[char]);
-    }
-
-    function displayDate(value) {
-      if (!value) return "—";
-      const date = new Date(value + (
-        /^\d{4}-\d{2}-\d{2}$/.test(value) ? "T12:00:00" : ""
-      ));
-      if (Number.isNaN(date.getTime())) return escapeHTML(value);
-      return date.toLocaleDateString("es-MX", {
-        year: "numeric", month: "short", day: "numeric"
-      });
-    }
-
-    function renderTable(containerId, headers, rows, emptyMessage) {
-      const container = $(containerId);
-
-      if (!rows || rows.length === 0) {
-        container.innerHTML = '<div class="empty">' +
-          escapeHTML(emptyMessage) + "</div>";
-        return;
-      }
-
-      const head = "<thead><tr>" + headers.map((header) =>
-        "<th>" + escapeHTML(header) + "</th>"
-      ).join("") + "</tr></thead>";
-
-      const body = "<tbody>" + rows.map((row) =>
-        "<tr>" + row.map((cell) =>
-          "<td>" + (cell ?? "—") + "</td>"
-        ).join("") + "</tr>"
-      ).join("") + "</tbody>";
-
-      container.innerHTML =
-        '<div class="table-wrap"><table>' + head + body + "</table></div>";
-    }
-
-    async function authorizeUser(user) {
-      const requestId = ++dashboardRequest;
-
-      const { data: profile, error } = await sbClient
-        .from("profiles")
-        .select("user_id, full_name, role")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-      if (requestId !== dashboardRequest) return;
-
-      if (error) {
-        await sbClient.auth.signOut();
-        showLoginScreen("login");
-        showMessage(
-          "No pudimos verificar tu perfil. Revisa las políticas RLS de profiles en Supabase. Detalle: " +
-          error.message,
-          "error"
-        );
-        return;
-      }
-
-      if (!profile || !["admin", "teacher"].includes(profile.role)) {
-        await sbClient.auth.signOut();
-        showLoginScreen("login");
-        showMessage(
-          "Tu cuenta no tiene un perfil autorizado. Un administrador debe asignarte el rol correspondiente.",
-          "error"
-        );
-        return;
-      }
-
-      currentUserId = user.id;
-      $("loginScreen").classList.add("hidden");
-      $("dashboardScreen").classList.remove("hidden");
-      $("welcomeText").textContent =
-        "Bienvenido/a, " + (profile.full_name || "equipo del ministerio") + ".";
-
-      await loadDashboard();
-    }
-
-    async function loadDashboard() {
-      const requestId = dashboardRequest;
-
-      const queries = [
-        {
-          table: "students",
-          select: "id, full_name, age, grade, interests, strengths, development_areas",
-          countId: "studentCount",
-          container: "studentsTable"
-        },
-        {
-          table: "personal_tours",
-          select: "id, student_id, teacher_id, meeting_date, next_steps",
-          countId: "meetingCount",
-          container: "meetingsTable"
-        },
-        {
-          table: "development_goals",
-          select: "id, student_id, goal, status, target_date",
-          countId: "goalCount",
-          container: "goalsTable"
-        },
-        {
-          table: "followups",
-          select: "id, student_id, description, due_date, completed_at",
-          countId: "followupCount",
-          container: "followupsTable"
-        }
-      ];
-
-      const results = await Promise.all(queries.map(async (query) => {
-        const { data, error } = await sbClient
-          .from(query.table)
-          .select(query.select)
-          .limit(100);
-
-        return { ...query, data: data || [], error };
-      }));
-
-      if (requestId !== dashboardRequest) return;
-
-      const errors = results.filter((result) => result.error);
-
-      if (errors.length) {
-        console.error("Dashboard query errors:", errors.map((result) => ({
-          table: result.table,
-          message: result.error.message
-        })));
-
-        setDashboardMessage(
-          "Algunas secciones no pudieron cargarse. Revisa las políticas RLS y los permisos SELECT de las tablas en Supabase. Las secciones afectadas muestran un aviso.",
-          "error"
-        );
-      } else {
-        clearMessage("dashboardMessage");
-      }
-
-      const resultFor = (table) => results.find((item) => item.table === table);
-
-      const students = resultFor("students");
-      const meetings = resultFor("personal_tours");
-      const goals = resultFor("development_goals");
-      const followups = resultFor("followups");
-
-      for (const result of results) {
-        $(result.countId).textContent = result.error ? "—" : result.data.length;
-        if (result.error) {
-          $(result.container).innerHTML =
-            '<div class="empty">No se pudieron cargar estos datos. Revisa los permisos de acceso.</div>';
-        }
-      }
-
-      if (!students.error) {
-        const studentRows = students.data.map((student) => [
-          escapeHTML(student.full_name),
-          escapeHTML(student.age ?? "—"),
-          escapeHTML(student.grade ?? "—"),
-          escapeHTML(student.strengths ?? "—"),
-          escapeHTML(student.development_areas ?? "—")
-        ]);
-
-        renderTable(
-          "studentsTable",
-          ["Nombre", "Edad", "Grado", "Fortalezas", "Áreas de crecimiento"],
-          studentRows,
-          "Todavía no hay jóvenes registrados."
-        );
-      }
-
-      if (!meetings.error) {
-        const meetingRows = meetings.data.map((meeting) => [
-          escapeHTML(displayDate(meeting.meeting_date)),
-          escapeHTML(meeting.student_id),
-          escapeHTML(meeting.next_steps ?? "—")
-        ]);
-
-        renderTable(
-          "meetingsTable",
-          ["Fecha", "ID del joven", "Próximos pasos"],
-          meetingRows,
-          "Todavía no hay encuentros registrados."
-        );
-      }
-
-      if (!goals.error) {
-        const goalRows = goals.data.map((goal) => [
-          escapeHTML(goal.goal),
-          escapeHTML(goal.status ?? "—"),
-          escapeHTML(displayDate(goal.target_date))
-        ]);
-
-        renderTable(
-          "goalsTable",
-          ["Meta", "Estado", "Fecha objetivo"],
-          goalRows,
-          "Todavía no hay metas registradas."
-        );
-      }
-
-      if (!followups.error) {
-        const followupRows = followups.data.map((item) => [
-          escapeHTML(item.description),
-          escapeHTML(displayDate(item.due_date)),
-          item.completed_at
-            ? '<span class="status">Completado</span>'
-            : '<span class="status">Pendiente</span>'
-        ]);
-
-        renderTable(
-          "followupsTable",
-          ["Seguimiento", "Fecha límite", "Estado"],
-          followupRows,
-          "No hay seguimientos registrados."
-        );
-
-        if (!followups.error) {
-          const pending = followups.data.filter((item) => !item.completed_at).length;
-          $("followupCount").textContent = pending;
-        }
-      }
-    }
-
-    $("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      clearMessage();
-
-      const email = $("loginEmail").value.trim();
-      const password = $("loginPassword").value;
-
-      setBusy("loginButton", true, "Verificando…");
-
-      try {
-        const { data, error } = await sbClient.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        $("loginPassword").value = "";
-
-        if (error || !data.user) {
-          showMessage(friendlyError(error), "error");
-          return;
-        }
-
-        await authorizeUser(data.user);
-      } catch (error) {
-        showMessage(friendlyError(error), "error");
-      } finally {
-        setBusy("loginButton", false);
-      }
+$("loginForm").addEventListener("submit",async event=>{
+  event.preventDefault();clearLoginMessage();
+  busy("loginButton",true,"Verificando…");
+  try {
+    const {data,error}=await sbClient.auth.signInWithPassword({
+      email:$("loginEmail").value.trim(),
+      password:$("loginPassword").value
     });
+    $("loginPassword").value="";
+    if(error||!data.user){showLoginMessage(friendlyError(error),"error");return;}
+    await authorizeUser(data.user);
+  } catch(error) {
+    showLoginMessage(friendlyError(error),"error");
+  } finally {busy("loginButton",false);}
+});
 
-    $("forgotButton").addEventListener("click", () => {
-      $("recoveryEmail").value = $("loginEmail").value.trim();
-      showLoginView("forgot");
-    });
+$("forgotButton").addEventListener("click",()=>{
+  $("recoveryEmail").value=$("loginEmail").value.trim();
+  showLoginView("forgot");
+});
+$("backToLogin").addEventListener("click",()=>showLoginView("login"));
 
-    $("backToLogin").addEventListener("click", () => {
-      showLoginView("login");
-    });
+$("forgotForm").addEventListener("submit",async event=>{
+  event.preventDefault();clearLoginMessage();
+  busy("recoveryButton",true,"Enviando…");
+  try {
+    const redirectTo=window.location.origin+window.location.pathname;
+    const {error}=await sbClient.auth.resetPasswordForEmail($("recoveryEmail").value.trim(),{redirectTo});
+    if(error)showLoginMessage(friendlyError(error),"error");
+    else showLoginMessage("Si el correo corresponde a una cuenta, recibirás un enlace de recuperación. Revisa tu bandeja de entrada y la carpeta de spam.","success");
+  } catch(error) {showLoginMessage(friendlyError(error),"error");}
+  finally {busy("recoveryButton",false);}
+});
 
-    $("forgotForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      clearMessage();
-
-      const email = $("recoveryEmail").value.trim();
-      const redirectTo = window.location.origin + window.location.pathname;
-
-      setBusy("recoveryButton", true, "Enviando…");
-
-      try {
-        const { error } = await sbClient.auth.resetPasswordForEmail(email, {
-          redirectTo
-        });
-
-        if (error) {
-          showMessage(friendlyError(error), "error");
-        } else {
-          showMessage(
-            "Si el correo corresponde a una cuenta, recibirás instrucciones para restablecer la contraseña. Revisa tu bandeja de entrada y la carpeta de spam.",
-            "success"
-          );
-        }
-      } catch (error) {
-        showMessage(friendlyError(error), "error");
-      } finally {
-        setBusy("recoveryButton", false);
-      }
-    });
-
-    $("resetForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      clearMessage();
-
-      const password = $("newPassword").value;
-      const confirmation = $("confirmPassword").value;
-
-      if (password.length < 8) {
-        showMessage("La contraseña debe tener al menos 8 caracteres.", "error");
-        return;
-      }
-
-      if (password !== confirmation) {
-        showMessage("Las contraseñas no coinciden.", "error");
-        return;
-      }
-
-      setBusy("savePasswordButton", true, "Guardando…");
-
-      try {
-        const { data: sessionData } = await sbClient.auth.getSession();
-
-        if (!sessionData.session) {
-          showMessage(
-            "La sesión de recuperación no está activa. Solicita un nuevo enlace de recuperación y ábrelo desde tu correo.",
-            "error"
-          );
-          return;
-        }
-
-        const { error } = await sbClient.auth.updateUser({ password });
-
-        if (error) {
-          showMessage(friendlyError(error), "error");
-          return;
-        }
-
-        recoveryMode = false;
-        $("newPassword").value = "";
-        $("confirmPassword").value = "";
-
-        await sbClient.auth.signOut();
-        showLoginScreen("login");
-        showMessage(
-          "¡Contraseña actualizada! Ya puedes iniciar sesión con tu nueva contraseña.",
-          "success"
-        );
-      } catch (error) {
-        showMessage(friendlyError(error), "error");
-      } finally {
-        setBusy("savePasswordButton", false);
-      }
-    });
-
-    $("logoutButton").addEventListener("click", async () => {
-      $("logoutButton").disabled = true;
-      const { error } = await sbClient.auth.signOut();
-      $("logoutButton").disabled = false;
-
-      if (error) {
-        setDashboardMessage("No se pudo cerrar sesión: " + error.message, "error");
-        return;
-      }
-
-      currentUserId = null;
-      dashboardRequest++;
-      showLoginScreen("login");
-    });
-
-    // Recovery links can return with a recovery session or an auth code.
-    sbClient.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY") {
-        recoveryMode = true;
-        showLoginScreen("reset");
-      }
-    });
-
-    async function initializeApp() {
-      const url = new URL(window.location.href);
-      const queryError = url.searchParams.get("error_description");
-
-      if (queryError) {
-        showLoginScreen("login");
-        showMessage(
-          "El enlace de autenticación tuvo un problema. Solicita un nuevo enlace. Detalle: " +
-          queryError,
-          "error"
-        );
-        return;
-      }
-
-      const { data, error } = await sbClient.auth.getSession();
-
-      if (error) {
-        showLoginScreen("login");
-        showMessage(friendlyError(error), "error");
-        return;
-      }
-
-      // Supabase's auth callback may set recoveryMode asynchronously.
-      await new Promise((resolve) => setTimeout(resolve, 150));
-
-      if (recoveryMode) {
-        showLoginScreen("reset");
-        return;
-      }
-
-      if (data.session?.user) {
-        await authorizeUser(data.session.user);
-      } else {
-        showLoginScreen("login");
-      }
+$("resetForm").addEventListener("submit",async event=>{
+  event.preventDefault();clearLoginMessage();
+  const password=$("newPassword").value;
+  if(password.length<8){showLoginMessage("La contraseña debe tener al menos 8 caracteres.","error");return;}
+  if(password!==$("confirmPassword").value){showLoginMessage("Las contraseñas no coinciden.","error");return;}
+  busy("savePasswordButton",true,"Guardando…");
+  try {
+    const {data:sessionData}=await sbClient.auth.getSession();
+    if(!sessionData.session){
+      showLoginMessage("No hay una sesión de recuperación activa. Solicita un nuevo enlace y ábrelo desde tu correo.","error");
+      return;
     }
+    const {error}=await sbClient.auth.updateUser({password});
+    if(error){showLoginMessage(friendlyError(error),"error");return;}
+    recoveryMode=false;
+    $("newPassword").value="";$("confirmPassword").value="";
+    await sbClient.auth.signOut();
+    showLoginScreen("login");
+    showLoginMessage("¡Contraseña actualizada! Ya puedes iniciar sesión.","success");
+  } catch(error) {showLoginMessage(friendlyError(error),"error");}
+  finally {busy("savePasswordButton",false);}
+});
 
-    initializeApp();
-  </script>
+sbClient.auth.onAuthStateChange((event,session)=>{
+  if(event==="PASSWORD_RECOVERY"){
+    recoveryMode=true;
+    showLoginScreen("reset");
+  }
+});
+
+async function authorizeUser(user) {
+  const request=++dashboardRequest;
+  const {data:profile,error}=await sbClient.from("profiles")
+    .select("user_id,full_name,role").eq("user_id",user.id).maybeSingle();
+
+  if(request!==dashboardRequest)return;
+  if(error){
+    await sbClient.auth.signOut();
+    showLoginScreen("login");
+    showLoginMessage("No pudimos verificar tu perfil. Revisa las políticas RLS de profiles. Detalle: "+error.message,"error");
+    return;
+  }
+  if(!profile||!["admin","teacher"].includes(profile.role)){
+    await sbClient.auth.signOut();
+    showLoginScreen("login");
+    showLoginMessage("Esta cuenta no tiene un perfil autorizado. Un administrador debe asignarle el rol correspondiente.","error");
+    return;
+  }
+
+  $("loginScreen").classList.add("hidden");
+  $("dashboardScreen").classList.remove("hidden");
+  $("userName").textContent=profile.full_name||"Ministerio Juvenil";
+  $("userRole").textContent=profile.role==="admin"?"Administrador":"Maestro/a";
+  const initials=(profile.full_name||"MJ").split(/\s+/).slice(0,2).map(part=>part[0]).join("").toUpperCase();
+  $("userAvatar").textContent=initials;
+  await loadDashboard();
+}
+
+function renderTable(id,headers,rows,emptyMessage) {
+  const el=$(id);
+  if(!rows.length){el.innerHTML='<div class="empty-state" style="padding:25px"><p>'+safe(emptyMessage)+'</p></div>';return;}
+  el.innerHTML='<div class="table-wrap"><table><thead><tr>'+
+    headers.map(h=>"<th>"+safe(h)+"</th>").join("")+
+    "</tr></thead><tbody>"+
+    rows.map(row=>"<tr>"+row.map(cell=>"<td>"+(cell??"—")+"</td>").join("")+"</tr>").join("")+
+    "</tbody></table></div>";
+}
+
+async function fetchRows(table,columns) {
+  const {data,error}=await sbClient.from(table).select(columns).limit(200);
+  return {data:data||[],error};
+}
+
+async function loadDashboard() {
+  const request=dashboardRequest;
+  clearDashboardMessage();
+  ["studentsTable","meetingsTable","goalsTable","followupsTable","homeStudents"].forEach(id=>$(id).innerHTML='<div class="loading">Cargando…</div>');
+
+  const [students,meetings,goals,followups]=await Promise.all([
+    fetchRows("students","id,full_name,age,grade,interests,strengths,development_areas"),
+    fetchRows("personal_tours","id,student_id,teacher_id,meeting_date,next_steps"),
+    fetchRows("development_goals","id,student_id,goal,status,target_date"),
+    fetchRows("followups","id,student_id,description,due_date,completed_at")
+  ]);
+
+  if(request!==dashboardRequest)return;
+  const results=[students,meetings,goals,followups];
+  if(results.some(result=>result.error)){
+    console.error("Dashboard load errors:",results.filter(r=>r.error).map(r=>r.error.message));
+    showDashboardMessage("Algunas secciones no pudieron cargarse. Revisa las políticas RLS y los permisos SELECT de las tablas en Supabase. Los detalles técnicos están disponibles en la consola del navegador.","error");
+  }
+
+  $("studentCount").textContent=students.error?"—":students.data.length;
+  $("meetingCount").textContent=meetings.error?"—":meetings.data.length;
+  $("goalCount").textContent=goals.error?"—":goals.data.length;
+  $("followupCount").textContent=followups.error?"—":followups.data.filter(x=>!x.completed_at).length;
+
+  allStudents=students.data;
+  if(!students.error){
+    const studentRows=students.data.map(s=>[
+      safe(s.full_name),safe(s.age??"—"),safe(s.grade??"—"),
+      safe(s.interests??"—"),safe(s.strengths??"—"),safe(s.development_areas??"—")
+    ]);
+    renderTable("studentsTable",["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],studentRows,"Todavía no hay jóvenes registrados.");
+    renderTable("homeStudents",["Nombre","Grado","Fortalezas"],students.data.slice(0,5).map(s=>[
+      safe(s.full_name),safe(s.grade??"—"),safe(s.strengths??"—")
+    ]),"Todavía no hay jóvenes registrados.");
+  } else {
+    $("studentsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los perfiles. Revisa los permisos de acceso.</p></div>';
+    $("homeStudents").innerHTML='<div class="empty-state"><p>No se pudieron cargar los perfiles.</p></div>';
+  }
+
+  if(!meetings.error)renderTable("meetingsTable",["Fecha","ID del joven","Próximos pasos"],meetings.data.map(m=>[
+    safe(dateText(m.meeting_date)),safe(m.student_id),safe(m.next_steps??"—")
+  ]),"Todavía no hay encuentros registrados.");
+  else $("meetingsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los encuentros.</p></div>';
+
+  if(!goals.error)renderTable("goalsTable",["Meta","Estado","Fecha objetivo"],goals.data.map(g=>[
+    safe(g.goal),safe(g.status??"—"),safe(dateText(g.target_date))
+  ]),"Todavía no hay metas registradas.");
+  else $("goalsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar las metas.</p></div>';
+
+  if(!followups.error)renderTable("followupsTable",["Seguimiento","Fecha límite","Estado"],followups.data.map(f=>[
+    safe(f.description),safe(dateText(f.due_date)),
+    f.completed_at?'<span class="status">Completado</span>':'<span class="status status-pending">Pendiente</span>'
+  ]),"No hay seguimientos registrados.");
+  else $("followupsTable").innerHTML='<div class="empty-state"><p>No se pudieron cargar los seguimientos.</p></div>';
+}
+
+$("studentSearch").addEventListener("input",event=>{
+  const q=event.target.value.trim().toLocaleLowerCase("es");
+  const filtered=allStudents.filter(s=>
+    [s.full_name,s.grade,s.interests,s.strengths,s.development_areas]
+      .some(v=>String(v??"").toLocaleLowerCase("es").includes(q))
+  );
+  renderTable("studentsTable",["Nombre","Edad","Grado","Intereses","Fortalezas","Áreas de crecimiento"],filtered.map(s=>[
+    safe(s.full_name),safe(s.age??"—"),safe(s.grade??"—"),safe(s.interests??"—"),safe(s.strengths??"—"),safe(s.development_areas??"—")
+  ]),q?"No se encontraron jóvenes con esa búsqueda.":"Todavía no hay jóvenes registrados.");
+});
+
+$("logoutButton").addEventListener("click",async()=>{
+  $("logoutButton").disabled=true;
+  const {error}=await sbClient.auth.signOut();
+  $("logoutButton").disabled=false;
+  if(error){showDashboardMessage("No se pudo cerrar sesión: "+error.message,"error");return;}
+  dashboardRequest++;
+  allStudents=[];
+  showLoginScreen("login");
+});
+
+async function initializeApp() {
+  const url=new URL(window.location.href);
+  const authError=url.searchParams.get("error_description");
+  if(authError){
+    showLoginScreen("login");
+    showLoginMessage("El enlace de autenticación tuvo un problema. Solicita un enlace nuevo. Detalle: "+authError,"error");
+    return;
+  }
+  const {data,error}=await sbClient.auth.getSession();
+  if(error){showLoginScreen("login");showLoginMessage(friendlyError(error),"error");return;}
+  if(recoveryMode)return;
+  if(data.session?.user)await authorizeUser(data.session.user);
+  else showLoginScreen("login");
+}
+
+initializeApp();
+</script>
 </body>
 </html>
